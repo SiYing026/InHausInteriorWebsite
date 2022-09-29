@@ -2,11 +2,11 @@
 <!-- Price box minimal--><!DOCTYPE html>
 <html class="wide wow-animation" lang="en">
   <head>
-    <title>Contacts</title>
+    <title>In Haus Interior + Staging</title>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, height=device-height, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <link rel="icon" href="images/favicon.ico" type="image/x-icon">
+    <link rel="icon" href="images/favicon.png" type="image/x-icon">
     <link rel="stylesheet" type="text/css" href="//fonts.googleapis.com/css?family=Poppins:300,400,500,600,700,900%7CRoboto:300,300i,400,400i,500,500i,700,700i,900,900i">
     <link rel="stylesheet" href="css/bootstrap.css">
     <link rel="stylesheet" href="css/fonts.css">
@@ -42,7 +42,7 @@
                 <div class="rd-navbar-nav-wrap">
                   <!-- RD Navbar Nav-->
                   <ul class="rd-navbar-nav">
-                      <li class="rd-nav-item active"><a class="rd-nav-link" href="index.php">Home</a>
+                      <li class="rd-nav-item"><a class="rd-nav-link" href="index.php">Home</a>
                       </li>
                       <li class="rd-nav-item"><a class="rd-nav-link" href="about-us.php">About</a>
                       </li>
@@ -50,7 +50,7 @@
                       </li>
                       <li class="rd-nav-item"><a class="rd-nav-link" href="consultation-form.php">Consultation</a>
                       </li>
-                      <li class="rd-nav-item"><a class="rd-nav-link" href="contacts.php">Contacts</a>
+                      <li class="rd-nav-item  active"><a class="rd-nav-link" href="contacts.php">Contacts</a>
                       </li>
                     </ul>
                 </div>
@@ -61,8 +61,9 @@
       </header>
       <section class="breadcrumbs-custom bg-image context-dark" style="background-image: url(images/contacts-banner.jpg);">
         <div class="container">
-          <h3 class="breadcrumbs-custom-title">Contacts</h3>
-          <pre-footer-classic class="breadcrumbs-custom-subtitle">View our contacts or write us a message</pre-footer-classic>
+          <h3 class="breadcrumbs-custom-title">Contact Us</h3>
+          <pre-footer-classic class="breadcrumbs-custom-subtitle">Do you have a burning question, casual remark, or useful feedback? <br>
+              View our contacts or write us a message</pre-footer-classic>
         </div>
       </section>
       <!-- Blurb minimal-->
@@ -74,7 +75,7 @@
                 <div class="box-lined-body">
                   <h6 class="box-lined-title">Email & telephone</h6>
                   <ul class="box-lined-list text-black">
-                    <li><a class="big link-default" href="mailto:#">info@demolink.org</a></li>
+                    <li><a class="big link-default" href="mailto:#">info@inhausinterior.com</a></li>
                     <li><a class="big link-default" href="tel:#">1-300-123-1234</a></li>
                   </ul>
                 </div>
@@ -85,7 +86,8 @@
                 <div class="box-lined-body">
                   <h6 class="box-lined-title">Address</h6>
                   <ul class="box-lined-list text-black">
-                    <li class="big">1418 Riverwood Drive, Suite 3845 Cottonwood, CA 96022 United States</li>
+                    <li class="big"><b>IN HAUS GROUP HEADQUARTERS</b><br><br>
+                        1418 Riverwood Drive, Suite 3845 Cottonwood, CA 96022 United States</li>
                   </ul>
                 </div>
               </div>
@@ -95,10 +97,10 @@
                 <div class="box-lined-body">
                   <h6 class="box-lined-title">Socials</h6>
                   <ul class="list-inline list-inline-sm">
-                    <li><a class="icon icon-sm icon-bordered link-default mdi mdi-facebook" href="#"></a></li>
-                    <li><a class="icon icon-sm icon-bordered link-default mdi mdi-instagram" href="#"></a></li>
-                    <li><a class="icon icon-sm icon-bordered link-default mdi mdi-behance" href="#"></a></li>
-                    <li><a class="icon icon-sm icon-bordered link-default mdi mdi-twitter" href="#"></a></li>
+                    <li><a class="icon icon-sm icon-bordered link-default mdi mdi-facebook" href="https://www.facebook.com/" target="_blank"></a></li>
+                    <li><a class="icon icon-sm icon-bordered link-default mdi mdi-instagram" href="https://www.instagram.com/" target="_blank"></a></li>
+                    <li><a class="icon icon-sm icon-bordered link-default mdi mdi-whatsapp" href="https://wa.link/l3cci2" target="_blank"></a></li>
+                    <li><a class="icon icon-sm icon-bordered link-default mdi mdi-twitter" href="https://twitter.com/i/flow/login" target="_blank"></a></li>
                   </ul>
                 </div>
               </div>
@@ -110,9 +112,20 @@
       <section class="section section-md bg-default">
         <div class="container">
           <h4>Get in touch with us</h4>
-          <p class="big">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud</p>
           <!-- RD Mailform-->
           <form class="rd-form rd-mailform form-boxed" data-form-output="form-output-global" data-form-type="contact" method="post" action="bat/rd-mailform.php">
+            <div class="row row-50">
+                <div class="col-12">
+                    <p class="big">Please select a topic below related to your enquiry: </p>
+                    <ul>
+                      <li class=""><input type="radio" id="html" name="fav_language" value="HTML">Product Enquiry </li>
+                      <li><input type="radio" id="html" name="fav_language" value="HTML">Supplier Enquiry </li>
+                      <li><input type="radio" id="html" name="fav_language" value="HTML">Project Quotation </li>
+                      <li><input type="radio" id="html" name="fav_language" value="HTML">Catalogue Request </li>
+                      <li><input type="radio" id="html" name="fav_language" value="HTML">Others </li>
+                    </ul>
+                </div>
+            </div>
             <div class="row row-50">
               <div class="col-lg-4">
                 <div class="form-wrap form-wrap-icon">
