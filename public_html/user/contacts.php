@@ -145,7 +145,7 @@
 
                             $mail->isHTML(true);
                             $mail->Subject = "In Haus : $subject";
-                            $mail->Body = "Topic : $enquiry <br>Name: $name <br>Message : $message";
+                            $mail->Body = "Topic : $enquiry <br>Name: $name <br><p>Message : $message</p>";
 
                             $mail->send();
                             echo "<p style='color:black; text-align: left;'><strong>Message Sent! Thank you for contacting us.</strong></p>";
