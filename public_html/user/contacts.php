@@ -75,7 +75,7 @@
                 <div class="box-lined-body">
                   <h6 class="box-lined-title">Email & telephone</h6>
                   <ul class="box-lined-list text-black">
-                    <li><a class="big link-default" href="mailto:#">info@inhausinterior.com</a></li>
+                    <li><a class="big link-default" href="mailto:info@inhausinterior.com">info@inhausinterior.com</a></li>
                     <li><a class="big link-default" href="tel:#">1-300-123-1234</a></li>
                   </ul>
                 </div>
@@ -113,17 +113,65 @@
         <div class="container">
           <h4>Get in touch with us</h4>
           <!-- RD Mailform-->
-          <form class="rd-form rd-mailform form-boxed" data-form-output="form-output-global" data-form-type="contact" method="post" action="bat/rd-mailform.php">
+          <form class="rd-form rd-mailform form-boxed" data-form-output="form-output-global" data-form-type="contact" method="post" >
+              <?php
+                    use PHPMailer\PHPMailer\PHPMailer;
+
+                    require_once 'phpmailer/Exception.php';
+                    require_once 'phpmailer/PHPMailer.php';
+                    require_once 'phpmailer/SMTP.php';
+
+                    $mail = new PHPMailer(true);
+
+                    $alert = '';
+
+                    if(isset($_POST['submit'])){
+                        $name = $_POST['name'];
+                        $email = $_POST['email'];
+                        $enquiry = $_POST['enquiry'];
+                        $message = $_POST['message'];
+
+                        try{
+                            $mail->isSMTP();
+                            $mail->Host = 'smtp.gmail.com';
+                            $mail->SMTPAuth = true;
+                            $mail->Username = 'siying060202@gmail.com'; // Gmail address which you want to use as SMTP server
+                            $mail->Password = 'tnuccpcuysckrzxl'; // Gmail address Password
+                            $mail->SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS;
+                            $mail->Port = '587';
+
+                            $mail->setFrom('siying060202@gmail.com'); // Gmail address which you used as SMTP server
+                            $mail->addAddress('siying060202@gmail.com'); // Email address where you want to receive emails (you can use any of your gmail address including the gmail address which you used as SMTP server)
+
+                            $mail->isHTML(true);
+                            $mail->Subject = "In Haus : $subject";
+                            $mail->Body = "<h4>Topic : $enquiry <br>Name: $name </h4><h4><br>Message : </h4><p>$message</p>";
+
+                            $mail->send();
+                            echo "<p style='color:black; text-align: left;'><strong>Message Sent! Thank you for contacting us.</strong></p>";
+
+                        }catch (Exception $e){
+                            $alert = '<div class="alert-error">
+                            <span>'.$e->getMessage().'</span>
+                            </div>';
+                        }
+                    }
+            ?>           
             <div class="row row-50">
                 <div class="col-12">
-                    <p class="big">Please select a topic below related to your enquiry: </p>
-                    <ul>
-                      <li class=""><input type="radio" id="html" name="fav_language" value="HTML">Product Enquiry </li>
-                      <li><input type="radio" id="html" name="fav_language" value="HTML">Supplier Enquiry </li>
-                      <li><input type="radio" id="html" name="fav_language" value="HTML">Project Quotation </li>
-                      <li><input type="radio" id="html" name="fav_language" value="HTML">Catalogue Request </li>
-                      <li><input type="radio" id="html" name="fav_language" value="HTML">Others </li>
-                    </ul>
+                    <p class="big">Please select a topic below related to your enquiry: 
+                        <div class="form-wrap form-wrap-icon">
+                        <div class="form-icon mdi mdi-chevron-double-down"></div>
+                      <select class="form-input" name="enquiry" id="enquiry">
+                        <option value="Product Enquiry">Product Enquiry</option>
+                        <option value="Supplier Enquiry">Supplier Enquiry</option>
+                        <option value="Project Quotation">Project Quotation</option>
+                        <option value="Catalogue Request">Catalogue Request</option>
+                        <option value="Others">Others</option>
+                    </select>
+                    </p>
+                        </div>
+                    
                 </div>
             </div>
             <div class="row row-50">
@@ -156,7 +204,7 @@
                 </div>
               </div>
               <div class="col-md-12">
-                <button class="button button-default" type="submit">Send</button>
+                <button class="button button-default" type="submit" name="submit">Send</button>
               </div>
             </div>
           </form>
