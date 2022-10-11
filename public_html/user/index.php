@@ -299,33 +299,169 @@
               <div class="owl-carousel" data-items="1" data-md-items="2" data-lg-items="1" data-dots="true" data-nav="false" data-stage-padding="0" data-loop="false" data-margin="30" data-mouse-drag="false">
                 <article class="quote-minimal">
                   <div class="quote-body">
-                    <q>We selected Arty because of their architects’ rigorous design background and education. They did the best job!</q>
+                    <?php
+                        if ($dbc = mysqli_connect('localhost','root','','in_haus')){
+                            $sql="SELECT feedback_comment FROM feedback WHERE feedback_id =1";
+                            $result = mysqli_query($dbc,$sql);
+                            while($row = mysqli_fetch_assoc($result)){
+                                echo "<q>{$row['feedback_comment']}</q>";
+                            }
+                        }
+                    ?>
                   </div>
                   <div class="quote-footer">
-                    <cite class="quote-minimal-cite">John smith</cite>, <span class="quote-minimal-description">“STP productions”</span>
+                      <cite class="quote-minimal-cite">
+                        <?php
+                            if ($dbc = mysqli_connect('localhost','root','','in_haus')){
+                                $sql = "SELECT c.cust_name "
+                                        . " FROM project p, feedback f, customer c "
+                                        . "WHERE f.project_id = p.project_id "
+                                        . "AND p.cust_id = c.cust_id "
+                                        . "AND f.feedback_id = 1";
+                                $result = mysqli_query($dbc,$sql);
+                                while($row = mysqli_fetch_assoc($result)){
+                                    echo "<q>{$row['cust_name']}</q>";
+                                }
+                            }
+                        ?>
+                      </cite>
                   </div>
                 </article>
                 <article class="quote-minimal">
                   <div class="quote-body">
-                    <q>When we needed design and architecture specialists, your team was there for us. Thank you!</q>
+                    <?php
+                        if ($dbc = mysqli_connect('localhost','root','','in_haus')){
+                            $sql="SELECT feedback_comment FROM feedback WHERE feedback_id =2";
+                            $result = mysqli_query($dbc,$sql);
+                            while($row = mysqli_fetch_assoc($result)){
+                                echo "<q>{$row['feedback_comment']}</q>";
+                            }
+                        }
+                    ?>
                   </div>
                   <div class="quote-footer">
-                    <cite class="quote-minimal-cite">Kate williams</cite>, <span class="quote-minimal-description">“Fireworx”</span>
+                      <cite class="quote-minimal-cite">
+                        <?php
+                            if ($dbc = mysqli_connect('localhost','root','','in_haus')){
+                                $sql = "SELECT c.cust_name "
+                                        . " FROM project p, feedback f, customer c "
+                                        . "WHERE f.project_id = p.project_id "
+                                        . "AND p.cust_id = c.cust_id "
+                                        . "AND f.feedback_id = 2";
+                                $result = mysqli_query($dbc,$sql);
+                                while($row = mysqli_fetch_assoc($result)){
+                                    echo "<q>{$row['cust_name']}</q>";
+                                }
+                            }
+                        ?>
+                      </cite>
                   </div>
                 </article>
                 <article class="quote-minimal">
                   <div class="quote-body">
-                    <q>Out of all architecture companies offering design & construction services, you are the best!</q>
+                    <?php
+                        if ($dbc = mysqli_connect('localhost','root','','in_haus')){
+                            $sql="SELECT feedback_comment FROM feedback WHERE feedback_id =3";
+                            $result = mysqli_query($dbc,$sql);
+                            while($row = mysqli_fetch_assoc($result)){
+                                echo "<q>{$row['feedback_comment']}</q>";
+                            }
+                        }
+                    ?>
                   </div>
                   <div class="quote-footer">
-                    <cite class="quote-minimal-cite">Peter McMillan</cite>, <span class="quote-minimal-description">“MCM ltd.”</span>
+                      <cite class="quote-minimal-cite">
+                          <?php
+                            if ($dbc = mysqli_connect('localhost','root','','in_haus')){
+                                $sql = "SELECT c.cust_name "
+                                        . " FROM project p, feedback f, customer c "
+                                        . "WHERE f.project_id = p.project_id "
+                                        . "AND p.cust_id = c.cust_id "
+                                        . "AND f.feedback_id = 3";
+                                $result = mysqli_query($dbc,$sql);
+                                while($row = mysqli_fetch_assoc($result)){
+                                    echo "<q>{$row['cust_name']}</q>";
+                                }
+                            }
+                        ?>
+                      </cite>
+                  </div>
+                </article>
+                <article class="quote-minimal">
+                  <div class="quote-body">
+                    <?php
+                        if ($dbc = mysqli_connect('localhost','root','','in_haus')){
+                            $sql="SELECT feedback_comment FROM feedback WHERE feedback_id =4";
+                            $result = mysqli_query($dbc,$sql);
+                            while($row = mysqli_fetch_assoc($result)){
+                                echo "<q>{$row['feedback_comment']}</q>";
+                            }
+                        }
+                    ?>
+                  </div>
+                  <div class="quote-footer">
+                      <cite class="quote-minimal-cite">
+                          <?php
+                            if ($dbc = mysqli_connect('localhost','root','','in_haus')){
+                                $sql = "SELECT c.cust_name "
+                                        . " FROM project p, feedback f, customer c "
+                                        . "WHERE f.project_id = p.project_id "
+                                        . "AND p.cust_id = c.cust_id "
+                                        . "AND f.feedback_id = 4";
+                                $result = mysqli_query($dbc,$sql);
+                                while($row = mysqli_fetch_assoc($result)){
+                                    echo "<q>{$row['cust_name']}</q>";
+                                }
+                            }
+                        ?>
+                      </cite>
+                  </div>
+                </article>
+                  <article class="quote-minimal">
+                  <div class="quote-body">
+                    <?php
+                        if ($dbc = mysqli_connect('localhost','root','','in_haus')){
+                            $sql="SELECT feedback_comment FROM feedback WHERE feedback_id =5";
+                            $result = mysqli_query($dbc,$sql);
+                            while($row = mysqli_fetch_assoc($result)){
+                                echo "<q>{$row['feedback_comment']}</q>";
+                            }
+                        }
+                    ?>
+                  </div>
+                  <div class="quote-footer">
+                      <cite class="quote-minimal-cite">
+                          <?php
+                            if ($dbc = mysqli_connect('localhost','root','','in_haus')){
+                                $sql = "SELECT c.cust_name "
+                                        . " FROM project p, feedback f, customer c "
+                                        . "WHERE f.project_id = p.project_id "
+                                        . "AND p.cust_id = c.cust_id "
+                                        . "AND f.feedback_id = 5";
+                                $result = mysqli_query($dbc,$sql);
+                                while($row = mysqli_fetch_assoc($result)){
+                                    echo "<q>{$row['cust_name']}</q>";
+                                }
+                            }
+                        ?>
+                      </cite>
                   </div>
                 </article>
               </div>
             </div>
             <div class="col-lg-6">
               <div class="box-border-wrap box-border-wrap-left">
-                <div class="row"><a class="col-6 col-md-4 box-border" href="#"><img src="images/brand-1-196x162.png" alt="" width="196" height="162"/></a><a class="col-6 col-md-4 box-border" href="#"><img src="images/brand-2-196x162.png" alt="" width="196" height="162"/></a><a class="col-6 col-md-4 box-border" href="#"><img src="images/brand-3-196x162.png" alt="" width="196" height="162"/></a><a class="col-6 col-md-4 box-border" href="#"><img src="images/brand-4-196x162.png" alt="" width="196" height="162"/></a><a class="col-6 col-md-4 box-border" href="#"><img src="images/brand-5-196x162.png" alt="" width="196" height="162"/></a><a class="col-6 col-md-4 box-border" href="#">
+                <div class="row"><a class="col-6 col-md-4 box-border" href="#">
+                        <img src="images/brand-1.png" alt="" width="196" height="162"/></a>
+                    <a class="col-6 col-md-4 box-border" href="#">
+                        <img src="images/brand-2.png" alt="" width="196" height="162"/></a>
+                    <a class="col-6 col-md-4 box-border" href="#">
+                        <img src="images/brand-3.png" alt="" width="196" height="162"/></a>
+                    <a class="col-6 col-md-4 box-border" href="#">
+                        <img src="images/brand-4.png" alt="" width="196" height="162"/></a>
+                    <a class="col-6 col-md-4 box-border" href="#">
+                        <img src="images/brand-5.png" alt="" width="196" height="162"/></a>
+                    <a class="col-6 col-md-4 box-border" href="#">
                     <div class="icon icon-sm mdi mdi-arrow-right"></div></a></div>
               </div>
             </div>
@@ -346,7 +482,7 @@
             <div class="col-lg-7 col-xl-8">
               <div class="row no-gutters">
                 <div class="col-sm-6 wow fadeInLeft">
-                  <div class="box-team box-team-right"><img src="images/index-3-1-390x332.jpg" alt="" width="390" height="332"/>
+                  <div class="box-team box-team-right"><img src="images/staff1.jpg" alt="" width="390" height="332"/>
                     <div class="meta">
                       <div class="heading-6 title">Jane Smith</div>
                       <p class="position">Senior Architect</p>
@@ -354,7 +490,7 @@
                   </div>
                 </div>
                 <div class="col-sm-6 wow fadeInRight">
-                  <div class="box-team box-team-right"><img src="images/index-3-2-390x332.jpg" alt="" width="390" height="332"/>
+                  <div class="box-team box-team-right"><img src="images/staff2.jpg" alt="" width="390" height="332"/>
                     <div class="meta">
                       <div class="heading-6 title">Nathan Porter</div>
                       <p class="position">Founder, Director</p>
@@ -362,7 +498,7 @@
                   </div>
                 </div>
                 <div class="col-sm-6 wow fadeInLeft" data-wow-delay="0.2s">
-                  <div class="box-team box-team-right"><img src="images/index-3-3-390x332.jpg" alt="" width="390" height="332"/>
+                  <div class="box-team box-team-right"><img src="images/staff3.jpg" alt="" width="390" height="332"/>
                     <div class="meta">
                       <div class="heading-6 title">Sam Lee</div>
                       <p class="position">Interior Designer</p>
@@ -370,7 +506,7 @@
                   </div>
                 </div>
                 <div class="col-sm-6 wow fadeInRight" data-wow-delay="0.2s">
-                  <div class="box-team box-team-right"><img src="images/index-3-4-390x332.jpg" alt="" width="390" height="332"/>
+                  <div class="box-team box-team-right"><img src="images/staff4.jpg" alt="" width="390" height="332"/>
                     <div class="meta">
                       <div class="heading-6 title">Sarah Parker</div>
                       <p class="position">Exterior Designer</p>
