@@ -148,7 +148,7 @@
             <div class="col-lg-4">
               <div class="row no-gutters">
                 <div class="col-sm-6 col-lg-12">
-                  <div class="box-team"><img src="images/about-1-390x332.jpg" alt="" width="390" height="332"/>
+                  <div class="box-team"><img src="images/staff2.jpg" alt="" width="390" height="332"/>
                     <div class="meta">
                       <div class="heading-6 title">Nathan Porter</div>
                       <p class="position">Founder, Director</p>
@@ -156,7 +156,7 @@
                   </div>
                 </div>
                 <div class="col-sm-6 col-lg-12">
-                  <div class="box-team"><img src="images/about-2-390x332.jpg" alt="" width="390" height="332"/>
+                  <div class="box-team"><img src="images/staff4.jpg" alt="" width="390" height="332"/>
                     <div class="meta">
                       <div class="heading-6 title">Sarah Parker</div>
                       <p class="position">Exterior Designer</p>
@@ -164,7 +164,7 @@
                   </div>
                 </div>
                 <div class="col-sm-6 col-lg-12">
-                  <div class="box-team"><img src="images/about-3-390x332.jpg" alt="" width="390" height="332"/>
+                  <div class="box-team"><img src="images/staff3.jpg" alt="" width="390" height="332"/>
                     <div class="meta">
                       <div class="heading-6 title">Sam Lee</div>
                       <p class="position">Interior Designer</p>
@@ -172,7 +172,7 @@
                   </div>
                 </div>
                 <div class="col-sm-6 col-lg-12">
-                  <div class="box-team"><img src="images/about-4-390x332.jpg" alt="" width="390" height="332"/>
+                  <div class="box-team"><img src="images/staff1.jpg" alt="" width="390" height="332"/>
                     <div class="meta">
                       <div class="heading-6 title">Jane Smith</div>
                       <p class="position">Senior Architect</p>
@@ -261,36 +261,83 @@
       <section class="section section-lg bg-default">
         <div class="container">
           <div class="row row-30">
-            <div class="col-lg-6"><img src="images/single-project-6-526x652.jpg" alt="" width="526" height="652"/>
+            <div class="col-lg-6"><img src="images/about-us-2.jpg" alt="" width="526" height="652"/>
             </div>
             <div class="col-lg-6">
-              <h3 class="custom-title offset-left-14">Results of our work</h3>
-              <p class="big text-black"> Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
-              <p class="big text-black"> Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco</p>
+              <h3 class="custom-title offset-left-14">How We Work</h3>
               <article class="quote-simple">
                 <div class="quote-simple-body">
-                  <q class="text-primary">Morbi tristique senectus et netus et malesuada fames ac turpis egestas. Vestibulum tortor.</q>
+                  <q class="text-primary">7 easy steps to get your homes or commercial space ready in no time.</q>
                 </div>
-                <div class="quote-simple-footer">
-                  <cite class="heading-5 quote-simple-cite">Jane Smith</cite><span class="quote-simple-description">Client</span>
-                </div>
+                
+                <br><br>
+                <details class="details-example">
+                    <summary><cite class="heading-5 quote-simple-cite">STEP 1</cite><span class="quote-simple-description">Handshake & Brief</span></summary>
+                    <ul class="blurb-boxed-list">
+                        <li>Meeting with Client and prepare a project brief. This kickstart the project to understand on Client's general requirement eg. style, budget, problems etc.</li>
+                    </ul>
+                </details>
+                
+                <br>
+                <details class="details-example">
+                    <summary><cite class="heading-5 quote-simple-cite">STEP 2</cite><span class="quote-simple-description">Concept & Design</span></summary>
+                    <ul class="blurb-boxed-list">
+                        <li>Produce conceptual mood board, basic layout and draft estimates to further look into Client's needs and set design directions.</li>
+                    </ul>
+                </details>
+                
+                <br>
+                <details class="details-example">
+                    <summary><cite class="heading-5 quote-simple-cite">STEP 3</cite><span class="quote-simple-description">Design Development</span></summary>
+                    <ul class="blurb-boxed-list">
+                        <li>Engage and create 3D design, layout plan and material sample board to visualise interior setting.</li>
+                    </ul>
+                </details>  
+                
+                <br>
+                <details class="details-example">
+                    <summary><cite class="heading-5 quote-simple-cite">STEP 4</cite><span class="quote-simple-description">Fit-Out Contract</span></summary>
+                    <ul class="blurb-boxed-list">
+                        <li>Prepare construction detail and negotiate fit-out costing based on finalised design. Get ready to kick start the reno work!</li>
+                    </ul>
+                </details>  
+                
+                <br>
+                <details class="details-example">
+                    <summary><cite class="heading-5 quote-simple-cite">STEP 5</cite><span class="quote-simple-description">Construction & Build</span></summary>
+                    <ul class="blurb-boxed-list">
+                        <li>In Haus manages entire fit-out project while Client receives constant site report. Client just need to sit back, and prepare to move in according to schedule.</li>
+                    </ul>
+                </details>
+                
+                <br>
+                <details class="details-example">
+                    <summary><cite class="heading-5 quote-simple-cite">STEP 6</cite><span class="quote-simple-description">Handover & Closeout</span></summary>
+                    <ul class="blurb-boxed-list">
+                        <li>This is the most exciting part. Move in within stipulated time frame agreed by Client. Our works doesn't end here.</li>
+                    </ul>
+                </details>
+                
+                <br>
+                <details class="details-example">
+                    <summary><cite class="heading-5 quote-simple-cite">STEP 7</cite><span class="quote-simple-description">Occupation & Warranty</span></summary>
+                    <ul class="blurb-boxed-list">
+                        <li>Hope you are enjoying your new place and keep in touch, we are providing at least 12 months service warranty to delivered products. </li>
+                    </ul>
+                </details>
+                <script>
+                    const detailsElement = document.querySelector('.details-example');
+
+                    detailsElement.addEventListener('toggle', event => {
+                        if (event.target.open) {
+                            console.log('open');
+                        } else {
+                            console.log('closed');
+                        }
+                    });
+                </script>      
+                  
               </article>
-              <div class="row row-3">
-                <div class="col-md-6">
-                  <ul class="list-marked list-marked-3">
-                    <li><span class="big">Consectetur adipiscing elit</span></li>
-                    <li><span class="big">Quis nostrud exercitation</span></li>
-                    <li><span class="big">Exercitation ullamco laboris</span></li>
-                  </ul>
-                </div>
-                <div class="col-md-6">
-                  <ul class="list-marked list-marked-3">
-                    <li><span class="big">Pharetra vel turpis nunc</span></li>
-                    <li><span class="big">Enim eu turpis egestas</span></li>
-                    <li><span class="big">Nunc mi ipsum faucibus vitae</span></li>
-                  </ul>
-                </div>
-              </div>
             </div>
           </div>
         </div>
@@ -301,17 +348,16 @@
           <div class="row">
             <div class="col-md-5 text-block-1 wow fadeInLeft">
               <div class="section-sm section-sm-3">
-                <h5>Eastwood Hotel</h5>
-                <p class="big">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud</p>
-                <div class="button-wrap"><a class="button button-default button-invariable" href="#">view more</a></div>
+                <h5><b>Studio</b> - Interior Design</h5>
+                <p class="big">Started out as a kitchen cabinet & custom joinery specialist, In Haus has emerged into a creative interior design studio and renovator.</p>
+                <div class="button-wrap"><a class="button button-default button-invariable" href="portfolio.php">view more</a></div>
                 <ul class="list-inline list-inline-sm-1">
                   <li>
                     <p>Share</p>
                   </li>
-                  <li><a class="icon icon-sm link-default mdi mdi-facebook" href="#"></a></li>
-                  <li><a class="icon icon-sm link-default mdi mdi-instagram" href="#"></a></li>
-                  <li><a class="icon icon-sm link-default mdi mdi-twitter" href="#"></a></li>
-                  <li><a class="icon icon-sm link-default mdi mdi-youtube-play" href="#"></a></li>
+                    <li><a class="icon icon-sm icon-gray-filled icon-circle mdi mdi-whatsapp" href="https://wa.link/l3cci2" target="_blank"></a></li>
+                    <li><a class="icon icon-sm icon-gray-filled icon-circle mdi mdi-facebook" href="https://www.facebook.com/" target="_blank"></a></li>
+                    <li><a class="icon icon-sm icon-gray-filled icon-circle mdi mdi-instagram" href="https://www.instagram.com/" target="_blank"></a></li>
                 </ul>
               </div>
             </div>
@@ -321,8 +367,9 @@
         <div class="swiper-section">
           <div class="swiper-container swiper-slider swiper-slider-1" data-next=".custom-swiper-button-next" data-prev=".custom-swiper-button-prev" data-loop="true">
             <div class="swiper-wrapper">
-              <div class="swiper-slide" data-slide-bg="images/home-1-585x541.jpg"></div>
-              <div class="swiper-slide" data-slide-bg="images/home-2-585x541.jpg"></div>
+              <div class="swiper-slide" data-slide-bg="images/about-us-3.jpg"></div>
+              <div class="swiper-slide" data-slide-bg="images/about-us-4.jpg"></div>
+              <div class="swiper-slide" data-slide-bg="images/about-us-5.jpg"></div>
             </div>
             <div class="swiper-pagination"></div>
             <!-- Swiper Navigation-->
@@ -335,6 +382,7 @@
       </section>
       <!-- Page Footer-->
       <div class="pre-footer-classic bg-gray-700 context-dark">
+          <br><br>
         <div class="container">
           <div class="row row-30 justify-content-lg-between">
             <div class="col-sm-6 col-lg-3 col-xl-3">
@@ -365,10 +413,9 @@
                 <dd><a class="link-default" href="mailto:#">Info@demolink.org</a></dd>
               </dl>
               <ul class="list-inline list-inline-sm">
-                <li><a class="icon icon-sm icon-gray-filled icon-circle mdi mdi-facebook" href="#"></a></li>
-                <li><a class="icon icon-sm icon-gray-filled icon-circle mdi mdi-instagram" href="#"></a></li>
-                <li><a class="icon icon-sm icon-gray-filled icon-circle mdi mdi-behance" href="#"></a></li>
-                <li><a class="icon icon-sm icon-gray-filled icon-circle mdi mdi-twitter" href="#"></a></li>
+                <li><a class="icon icon-sm icon-gray-filled icon-circle mdi mdi-whatsapp" href="https://wa.link/l3cci2" target="_blank"></a></li>
+                <li><a class="icon icon-sm icon-gray-filled icon-circle mdi mdi-facebook" href="https://www.facebook.com/" target="_blank"></a></li>
+                <li><a class="icon icon-sm icon-gray-filled icon-circle mdi mdi-instagram" href="https://www.instagram.com/" target="_blank"></a></li>
               </ul>
             </div>
             <div class="col-lg-4">
@@ -390,14 +437,12 @@
       <footer class="section footer-classic context-dark text-center">
         <div class="container">
           <div class="row row-15 justify-content-lg-between">
-            <div class="col-lg-4 col-xl-3 text-lg-left">
-              <p class="rights"><span>&copy;&nbsp;</span><span class="copyright-year"></span>. All Rights Reserved. Design by <a href="https://www.templatemonster.com">TemplateMonster</a></p>
-            </div>
             <div class="col-lg-5 col-xl-6">
               <ul class="list-inline list-inline-lg text-uppercase">
-                <li><a href="about-us.html">About us</a></li>
-                <li><a href="#">Our Portfolio</a></li>
-                <li><a href="#">Blog</a></li>
+                <li><a href="about-us.php">About us</a></li>
+                <li><a href="portfolio.php">Our Portfolio</a></li>
+                <li><a href="faq.php">FAQ</a></li>
+                <li><a href="tnc.php">Terms & Conditions</a></li>
               </ul>
             </div>
           </div>
