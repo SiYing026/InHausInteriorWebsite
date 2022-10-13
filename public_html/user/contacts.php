@@ -113,7 +113,8 @@
         <div class="container">
           <h4>Get in touch with us</h4>
           <!-- RD Mailform-->
-          <form class="rd-form rd-mailform form-boxed" data-form-output="form-output-global" data-form-type="contact" method="post" >
+          <form class="rd-form rd-mailform form-boxed" data-form-output="form-output-global" data-form-type="contact" action="contacts.php" method="post" >
+
               <?php
                     use PHPMailer\PHPMailer\PHPMailer;
 
@@ -130,31 +131,38 @@
                         $email = $_POST['email'];
                         $enquiry = $_POST['enquiry'];
                         $message = $_POST['message'];
-
-                        try{
-                            $mail->isSMTP();
-                            $mail->Host = 'smtp.gmail.com';
-                            $mail->SMTPAuth = true;
-                            $mail->Username = 'siying060202@gmail.com'; // Gmail address which you want to use as SMTP server
-                            $mail->Password = 'tnuccpcuysckrzxl'; // Gmail address Password
-                            $mail->SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS;
-                            $mail->Port = '587';
-
-                            $mail->setFrom('siying060202@gmail.com'); // Gmail address which you used as SMTP server
-                            $mail->addAddress('siying060202@gmail.com'); // Email address where you want to receive emails (you can use any of your gmail address including the gmail address which you used as SMTP server)
-
-                            $mail->isHTML(true);
-                            $mail->Subject = "In Haus : $subject";
-                            $mail->Body = "Topic : $enquiry <br>Name: $name <br><p>Message : $message</p>";
-
-                            $mail->send();
-                            echo "<p style='color:black; text-align: left;'><strong>Message Sent! Thank you for contacting us.</strong></p>";
-
-                        }catch (Exception $e){
-                            $alert = '<div class="alert-error">
-                            <span>'.$e->getMessage().'</span>
-                            </div>';
-                        }
+                        
+//                        try{
+//                            $mail->isSMTP();
+//                            $mail->Host = 'smtp.gmail.com';
+//                            $mail->SMTPAuth = true;
+//                            $mail->Username = 'siying060202@gmail.com'; // Gmail address which you want to use as SMTP server
+//                            $mail->Password = 'tnuccpcuysckrzxl'; // Gmail address Password
+//                            $mail->SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS;
+//                            $mail->Port = '587';
+//
+//                            $mail->setFrom('siying060202@gmail.com'); // Gmail address which you used as SMTP server
+//                            $mail->addAddress('siying060202@gmail.com'); // Email address where you want to receive emails (you can use any of your gmail address including the gmail address which you used as SMTP server)
+//
+//                            $mail->isHTML(true);
+//                            $mail->Subject = "In Haus : $enquiry";
+//                            $mail->Body = "Name: $name <br>Email: $email <br><p>Message : $message</p>";
+//
+////                            $mail->send();
+////                            echo "<p style='color:black;'><strong>Message Sent! Thank you for contacting us.</strong></p>";
+////                            
+//                            if(!$mail->send()) {
+//                                echo "Mailer Error: " . $mail->ErrorInfo;
+//                            } 
+//                            else {
+//                                echo "<p style='color:red'>Message Sent! Thank you for contacting us.</p>";
+//                            }
+//    
+//                        }catch (Exception $e){
+//                            $alert = '<div class="alert-error">
+//                            <span>'.$e->getMessage().'</span>
+//                            </div>';
+//                        }
                     }
             ?>           
             <div class="row row-50">
@@ -204,7 +212,7 @@
                 </div>
               </div>
               <div class="col-md-12">
-                <button class="button button-default" type="submit" name="submit">Send</button>
+                <input type="submit" class="button button-default" name="submit" value="Submit"></input>
               </div>
             </div>
           </form>
@@ -242,10 +250,9 @@
                 <dd><a class="link-default" href="mailto:#">Info@demolink.org</a></dd>
               </dl>
               <ul class="list-inline list-inline-sm">
-                <li><a class="icon icon-sm icon-gray-filled icon-circle mdi mdi-facebook" href="#"></a></li>
-                <li><a class="icon icon-sm icon-gray-filled icon-circle mdi mdi-instagram" href="#"></a></li>
-                <li><a class="icon icon-sm icon-gray-filled icon-circle mdi mdi-behance" href="#"></a></li>
-                <li><a class="icon icon-sm icon-gray-filled icon-circle mdi mdi-twitter" href="#"></a></li>
+                <li><a class="icon icon-sm icon-gray-filled icon-circle mdi mdi-whatsapp" href="https://wa.link/l3cci2" target="_blank"></a></li>
+                <li><a class="icon icon-sm icon-gray-filled icon-circle mdi mdi-facebook" href="https://www.facebook.com/" target="_blank"></a></li>
+                <li><a class="icon icon-sm icon-gray-filled icon-circle mdi mdi-instagram" href="https://www.instagram.com/" target="_blank"></a></li>
               </ul>
             </div>
             <div class="col-lg-4">
@@ -267,14 +274,12 @@
       <footer class="section footer-classic context-dark text-center">
         <div class="container">
           <div class="row row-15 justify-content-lg-between">
-            <div class="col-lg-4 col-xl-3 text-lg-left">
-              <p class="rights"><span>&copy;&nbsp;</span><span class="copyright-year"></span>. All Rights Reserved. Design by <a href="https://www.templatemonster.com">TemplateMonster</a></p>
-            </div>
             <div class="col-lg-5 col-xl-6">
               <ul class="list-inline list-inline-lg text-uppercase">
-                <li><a href="about-us.html">About us</a></li>
-                <li><a href="#">Our Portfolio</a></li>
-                <li><a href="#">Blog</a></li>
+                <li><a href="about-us.php">About us</a></li>
+                <li><a href="portfolio.php">Our Portfolio</a></li>
+                <li><a href="faq.php">FAQ</a></li>
+                <li><a href="tnc.php">Terms & Conditions</a></li>
               </ul>
             </div>
           </div>
