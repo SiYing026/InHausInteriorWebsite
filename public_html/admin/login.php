@@ -1,3 +1,39 @@
+<?php
+
+  $err = "";
+
+  session_start();
+
+  if (isset($_SESSION['admin_id'])) {
+    session_destroy();
+  }
+  else {
+    if (isset($_POST['submitted'])) {
+      $dbc = mysqli_connect('localhost', 'root', '');
+      mysqli_select_db($dbc, 'in_haus');
+      
+      $admin_email = $_POST['email'];
+      $admin_password = md5($_POST['password']);
+  
+      $query = "SELECT admin_id FROM admin WHERE admin_email = '$admin_email' AND admin_password = '$admin_password'";
+  
+      $r = mysqli_query($dbc, $query);
+      $row = mysqli_fetch_array($r);
+  
+      if (isset($row)) {
+        $_SESSION['admin_id'] = $row['admin_id'];
+        header("Location: dashboard.php");
+      }
+      else {
+        $err = "The e-mail or password that you've entered is incorrect. Please try again.";
+      }
+  
+      mysqli_close($dbc);
+    }
+  }
+
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -33,14 +69,16 @@
         <div class="row">
           <div class="col-12 col-sm-8 offset-sm-2 col-md-6 offset-md-3 col-lg-6 offset-lg-3 col-xl-4 offset-xl-4">
             <div class="login-brand">
-              <img src="assets/img/stisla-fill.svg" alt="logo" width="100" class="shadow-light rounded-circle">
+              <!-- <img src="assets/img/stisla-fill.svg" alt="logo" width="100" class="shadow-light rounded-circle"> -->
+              <img src="../user/images/logo.png" alt="logo" width="130" class=" ">
             </div>
 
             <div class="card card-primary">
               <h4 class="text-center pt-5 pb-4">Login</h4>
 
               <div class="card-body">
-                <form method="POST" action="#" class="needs-validation" novalidate="">
+                <form method="POST" action="login.php" class="needs-validation" novalidate="">
+                  <div class="text-danger pb-3"><?php echo $err; ?></div>
                   <div class="form-group">
                     <label for="email">Email</label>
                     <input id="email" type="email" class="form-control" name="email" tabindex="1" required autofocus>
@@ -59,14 +97,14 @@
                     </div>
                   </div>
 
-                  <div class="mb-4">
-                    <a href="auth-forgot-password.html" class="text-small">
+                  <!-- <div class="mb-4">
+                    <a href="auth-forgot-password.php" class="text-small">
                       Forgot Password?
                     </a>
-                  </div>
+                  </div> -->
 
                   <div class="form-group">
-                    <button type="submit" class="btn btn-primary btn-lg btn-block" tabindex="4">
+                    <button type="submit" name="submitted" class="btn btn-primary btn-lg btn-block" tabindex="4">
                       Login
                     </button>
                   </div>
@@ -74,7 +112,7 @@
               </div>
             </div>
             <div class="simple-footer">
-              Copyright &copy; Stisla 2018
+              Copyright &copy; In Haus 2022
             </div>
           </div>
         </div>

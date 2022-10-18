@@ -1,3 +1,7 @@
+<?php
+  $page = "consultations";
+  session_start();
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -29,63 +33,7 @@
   <div id="app">
     <div class="main-wrapper main-wrapper-1">
         <div class="navbar-bg"></div>
-        <nav class="navbar navbar-expand-lg main-navbar">
-          <form class="form-inline mr-auto">
-            <ul class="navbar-nav mr-3">
-              <li><a href="#" data-toggle="sidebar" class="nav-link nav-link-lg"><i class="fas fa-bars"></i></a></li>
-              <li><a href="#" data-toggle="search" class="nav-link nav-link-lg d-sm-none"><i class="fas fa-search"></i></a></li>
-            </ul>
-          </form>
-          <ul class="navbar-nav navbar-right">
-            <li class="dropdown"><a href="#" data-toggle="dropdown" class="nav-link dropdown-toggle nav-link-lg nav-link-user">
-              <img alt="image" src="assets/img/avatar/avatar-1.png" class="rounded-circle mr-1">
-              <div class="d-sm-none d-lg-inline-block">Hi, Ujang Maman</div></a>
-              <div class="dropdown-menu dropdown-menu-right">
-                <div class="dropdown-title">Logged in 5 min ago</div>
-                <a href="features-profile.html" class="dropdown-item has-icon">
-                  <i class="far fa-user"></i> Profile
-                </a>
-                <a href="features-activities.html" class="dropdown-item has-icon">
-                  <i class="fas fa-bolt"></i> Activities
-                </a>
-                <a href="features-settings.html" class="dropdown-item has-icon">
-                  <i class="fas fa-cog"></i> Settings
-                </a>
-                <div class="dropdown-divider"></div>
-                <a href="#" class="dropdown-item has-icon text-danger">
-                  <i class="fas fa-sign-out-alt"></i> Logout
-                </a>
-              </div>
-            </li>
-          </ul>
-        </nav>
-        <div class="main-sidebar sidebar-style-2">
-          <aside id="sidebar-wrapper">
-            <div class="sidebar-brand">
-              <a href="index.html">In Haus</a>
-            </div>
-            <div class="sidebar-brand sidebar-brand-sm">
-              <a href="index.html">IH</a>
-            </div>
-            <ul class="sidebar-menu">
-              <!-- <li class="menu-header">Dashboard</li> -->
-              <li><a class="nav-link" href="dashboard.html"><i class="fas fa-chart-line"></i> <span>Dashboard</span></a></li>
-              <li><a class="nav-link" href="recent_activities.html"><i class="fas fa-chart-line"></i> <span>Recent Activities</span></a></li>
-              <li class="active"><a class="nav-link" href="consultations.html"><i class="fas fa-handshake"></i> <span>Consultations</span></a></li>
-              <li><a class="nav-link" href="projects.html"><i class="fas fa-clipboard-list"></i> <span>Projects</span></a></li>
-              <li><a class="nav-link" href="feedbacks.html"><i class="fas fa-comment-dots"></i> <span>Feedbacks</span></a></li>
-              <li><a class="nav-link" href="livechat.html"><i class="fas fa-headset"></i> <span>Live Chat</span></a></li>
-              <li>
-                <a href="#" class="nav-link has-dropdown"><i class="fas fa-cog"></i><span>Settings</span></a>
-                <ul class="dropdown-menu">
-                  <li><a class="nav-link" href="general_settings.html">General</a></li>
-                  <li><a class="nav-link" href="portfolios.html">Portfolios</a></li>
-                  <li><a class="nav-link" href="staffs.html">Staffs</a></li>
-                </ul>
-              </li>
-            </ul>
-          </aside>
-        </div>
+        <?php include("navbar.php"); ?>
 
       <!-- Main Content -->
       <div class="main-content">
@@ -101,7 +49,7 @@
                 <div class="card">
                     <div class="card-header">
                         <button class="btn btn-icon icon-left btn-primary mr-2"><i class="fas fa-check"></i> Save Changes</button> 
-                        <a href="consultations.html" class="btn btn-icon icon-left btn-danger"><i class="fas fa-times"></i> Close</a>
+                        <a href="consultations.php" class="btn btn-icon icon-left btn-danger"><i class="fas fa-times"></i> Close</a>
                     </div>
                     <div class="card-body">
                       <div class="form-group row">
