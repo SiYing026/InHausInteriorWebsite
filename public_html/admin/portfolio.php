@@ -54,7 +54,15 @@
 		$category = $_POST['category'];
 		$style = $_POST['style'];
 		$description = $_POST['description'];
-		$imagecheck = $_POST['imagecheck'];
+
+		if (isset($_POST['imagecheck'])) {
+			// old images chosen
+			$imagecheck = $_POST['imagecheck'];
+			$images_list = implode(",", $imagecheck);
+		}
+		else {
+			$images_list = "";
+		}
 
 		// validate file type and upload file if not empty
 		if (!empty($_FILES['thumbnail']['name'])) {
@@ -81,8 +89,7 @@
 			}
 		}
 
-		// old images chosen
-		$images_list = implode(",", $imagecheck);
+		
 
 		// new images uploaded
 		if (!empty($_FILES['images']['name'][0])) {
