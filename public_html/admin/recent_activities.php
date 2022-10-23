@@ -1,7 +1,157 @@
 <?php
+
+  function getActivitiesArray($activities, $type, $result) {
+    $created_datetime = $last_modified_datetime = $datetime = $action = $payment_status = "";
+    
+    while ($row = mysqli_fetch_array($result)) {
+      if ($type == "consultation" || $type == "project") {
+        $created_datetime = (!empty($row['created_datetime'])) ? $row['created_datetime'] : "";
+        $last_modified_datetime = (!empty($row['last_modified_datetime'])) ? $row['last_modified_datetime'] : "";
+
+        if ($created_datetime == $last_modified_datetime) {
+          $datetime = $created_datetime;
+          $action = "create";
+        }
+        else {
+          $datetime = $last_modified_datetime;
+          $action = "update";
+        }
+      }
+      else if ($type == "payment") {
+        if (!empty($row['payment_datetime'])) {
+          $payment = json_decode($row['payment_datetime']);
+
+          if (!empty($payment->{'1'})) {
+            $payment_status = "1st Payment";
+            $datetime = $payment->{'1'};
+          }
+          if (!empty($payment->{'2'})) {
+            $payment_status = "2nd Payment";
+            $datetime = $payment->{'2'};
+          }
+          if (!empty($payment->{'3'})) {
+            $payment_status = "3rd Payment";
+            $datetime = $payment->{'3'};
+          }
+            
+        }
+      }
+      else if ($type == "feedback") {
+        $datetime = (!empty($row['feedback_datetime'])) ? $row['feedback_datetime'] : "";
+      }
+
+      $activity = array(
+        "consultation_id" => (!empty($row['consultation_id'])) ? $row['consultation_id'] : "",
+        "project_id" => (!empty($row['project_id'])) ? $row['project_id'] : "",
+        "feedback_id" => (!empty($row['feedback_id'])) ? $row['feedback_id'] : "",
+        "project_name" => (!empty($row['project_name'])) ? $row['project_name'] : "",
+        "admin_name" => (!empty($row['admin_name'])) ? $row['admin_name'] : "",
+        "cust_name" => (!empty($row['cust_name'])) ? $row['cust_name'] : "",
+        "action" => $action,
+        "type" => $type,
+        "consultation_datetime" => (!empty($row['consultation_datetime'])) ? $row['consultation_datetime'] : "",
+        "payment_status" => $payment_status
+      );
+      $activities[$datetime] = $activity;
+
+      if ($action == "update") {
+        $datetime = (!empty($row['created_datetime'])) ? $row['created_datetime'] : "";
+        $activity = array(
+          "consultation_id" => (!empty($row['consultation_id'])) ? $row['consultation_id'] : "",
+          "project_id" => (!empty($row['project_id'])) ? $row['project_id'] : "",
+          "feedback_id" => (!empty($row['feedback_id'])) ? $row['feedback_id'] : "",
+          "project_name" => (!empty($row['project_name'])) ? $row['project_name'] : "",
+          "admin_name" => (!empty($row['admin_name'])) ? $row['admin_name'] : "",
+          "cust_name" => (!empty($row['cust_name'])) ? $row['cust_name'] : "",
+          "action" => "create",
+          "type" => $type,
+          "consultation_datetime" => (!empty($row['consultation_datetime'])) ? $row['consultation_datetime'] : "",
+          "payment_status" => $payment_status
+        );
+      }
+      $activities[$datetime] = $activity;
+
+    }
+
+    return $activities;
+  }
+
+  function get_time_ago( $time ) {
+    $time_difference = time() - $time;
+
+    if( $time_difference < 1 ) { return 'less than 1 second ago'; }
+    $condition = array( 12 * 30 * 24 * 60 * 60 =>  'year',
+                30 * 24 * 60 * 60       =>  'month',
+                24 * 60 * 60            =>  'day',
+                60 * 60                 =>  'hour',
+                60                      =>  'minute',
+                1                       =>  'second'
+    );
+
+    foreach( $condition as $secs => $str )
+    {
+        $d = $time_difference / $secs;
+
+        if( $d >= 1 )
+        {
+            $t = round( $d );
+            return $t . ' ' . $str . ( $t > 1 ? 's' : '' ) . ' ago';
+        }
+    }
+  }
+
   $page = "recent_activities";
   session_start();
+  date_default_timezone_set("Asia/Kuala_Lumpur");
+
+  $activities = array();
+
+  $dbc = mysqli_connect('localhost', 'root', '');
+	mysqli_select_db($dbc, 'in_haus');
+
+  // select from consultation table
+	$query = 'SELECT c.consultation_id, c.created_datetime, c.last_modified_datetime, c.consultation_datetime, cust.cust_name, a.admin_name 
+            FROM consultation c, customer cust, admin a 
+            WHERE c.cust_id = cust.cust_id 
+            AND c.admin_id = a.admin_id';
+	if (!$r = mysqli_query($dbc, $query)) {
+		echo '<p style="color:red;">Could not retrieve the data because: <br/>' . mysqli_error($dbc) . '</p><p>The query being run was: ' . $query . '</p>';
+	}
+  $activities = getActivitiesArray($activities, "consultation", $r);
+
+  // select from project table
+  $query = 'SELECT p.project_id, p.project_name, p.created_datetime, p.last_modified_datetime, a.admin_name 
+            FROM project p, admin a 
+            WHERE p.admin_id = a.admin_id';
+	if (!$r = mysqli_query($dbc, $query)) {
+		echo '<p style="color:red;">Could not retrieve the data because: <br/>' . mysqli_error($dbc) . '</p><p>The query being run was: ' . $query . '</p>';
+	}
+  $activities = getActivitiesArray($activities, "project", $r);
+
+  // select from payment table
+  $query = 'SELECT p.project_id, p.project_name, p.payment_datetime, c.cust_name 
+            FROM project p, customer c 
+            WHERE p.cust_id = c.cust_id';
+	if (!$r = mysqli_query($dbc, $query)) {
+		echo '<p style="color:red;">Could not retrieve the data because: <br/>' . mysqli_error($dbc) . '</p><p>The query being run was: ' . $query . '</p>';
+	}
+  $activities = getActivitiesArray($activities, "payment", $r);
+
+  // select from feedback table
+  $query = 'SELECT f.*, p.project_name, c.cust_name 
+            FROM feedback f, project p, customer c 
+            WHERE f.project_id = p.project_id 
+            AND p.cust_id = c.cust_id';
+	if (!$r = mysqli_query($dbc, $query)) {
+		echo '<p style="color:red;">Could not retrieve the data because: <br/>' . mysqli_error($dbc) . '</p><p>The query being run was: ' . $query . '</p>';
+	}
+  $activities = getActivitiesArray($activities, "feedback", $r);
+
+  krsort($activities);
+
+  mysqli_close($dbc);
 ?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -42,74 +192,72 @@
             <h1>Recent Activities</h1>
           </div>
           <div class="section-body">
-            <h2 class="section-title">September 2022</h2>
+            <!-- <h2 class="section-title">September 2022</h2> -->
             <div class="row">
               <div class="col-12">
                 <div class="activities">
+                  <?php foreach ($activities as $datetime => $details): ?>
+                  <?php
+                      $time_ago = get_time_ago(strtotime($datetime));
+
+                      switch ($details['type']) {
+                        case 'consultation':
+                          $url = "consultation.php?consultation_id=" . $details['consultation_id'];
+                          $icon = '<i class="fas fa-comments"></i>';
+
+                          if ($details['action'] == "create") {
+                            $activity = sprintf('<span class="text-primary">%s</span> has made appointment for consultation on <span class="text-primary">%s</span>.', $details['cust_name'], $details['consultation_datetime']);
+                          }
+                          else if ($details['action'] == "update") {
+                            $activity = sprintf('<span class="text-primary">%s</span> has updated the details for consultation <span class="text-primary">#%d</span>.', $details['admin_name'], $details['consultation_id']);
+                          }
+                          break;
+
+                        case 'project':
+                          $url = "project.php?project_id=" . $details['project_id'];
+                          $icon = '<i class="fas fa-clipboard-list"></i>';
+
+                          if ($details['action'] == "create") {
+                            $activity = sprintf('A new project <span class="text-primary">%s</span> has been confirmed by <span class="text-primary">%s</span>.', $details['project_name'], $details['admin_name']);
+                          }
+                          else if ($details['action'] == "update") {
+                            $activity = sprintf('<span class="text-primary">%s</span> has updated the details for project <span class="text-primary">%s</span>.', $details['admin_name'], $details['project_name']);
+                          }
+                          break;
+
+                        case 'payment':
+                          $url = "project.php?project_id=" . $details['project_id'];
+                          $icon = '<i class="fas fa-dollar-sign"></i>';
+
+                          $activity = sprintf('<span class="text-primary">%s</span> has made <span class="text-primary">%s</span> for project <span class="text-primary">%s</span>.', $details['cust_name'], $details['payment_status'], $details['project_name']);
+                          break;
+
+                        case 'feedback':
+                          $url = "feedback.php?feedback_id=" . $details['feedback_id'];
+                          $icon = '<i class="fas fa-comment-dots"></i>';
+                          
+                          $activity = sprintf('<span class="text-primary">%s</span> has gave a feedback for project <span class="text-primary">%s</span>.', $details['cust_name'], $details['project_name']);
+                          break;
+                        
+                        default:
+                          
+                          break;
+                      }
+                  ?>
                   <div class="activity">
                     <div class="activity-icon bg-primary text-white shadow-primary">
-                        <i class="fas fa-comments"></i> 
+                      <?php echo $icon; ?> 
                     </div>
                     <div class="activity-detail">
                       <div class="mb-2">
-                        <span class="text-job text-primary">2 min ago</span>
+                        <span class="text-job text-primary"><?php echo $time_ago; ?></span>
                         <span class="bullet"></span>
-                        <a class="text-job" href="#">View</a>
+                        <a class="text-job" href="<?php echo $url; ?>">View</a>
                       </div>
-                      <p><span class="text-primary">Joey</span> made appointment for consultation <a href="">#8</a> on <span class="text-primary">29 Sep 2022, 2.30 pm</span>.</p>
+                      <p><?php echo $activity; ?></p>
                     </div>
                   </div>
-                  <div class="activity">
-                    <div class="activity-icon bg-primary text-white shadow-primary">
-                        <i class="fas fa-clipboard-list"></i>
-                    </div>
-                    <div class="activity-detail">
-                      <div class="mb-2">
-                        <span class="text-job text-primary">1 hour ago</span>
-                        <span class="bullet"></span>
-                        <a class="text-job" href="#">View</a>
-                      </div>
-                      <p>A new project <a href="">#12</a> has been confirmed by <span class="text-primary">Si Ying</span>.</p>
-                    </div>
-                  </div>
-                  <div class="activity">
-                    <div class="activity-icon bg-primary text-white shadow-primary">
-                        <i class="fas fa-file-signature"></i>
-                    </div>
-                    <div class="activity-detail">
-                      <div class="mb-2">
-                        <span class="text-job text-primary">4 hour ago</span>
-                        <a class="text-job" href="#">View</a>
-                      </div>
-                      <p><span class="text-primary">Kah Siang</span> has uploaded a contract for project <a href="">#31</a>.</p>
-                    </div>
-                  </div>
-                  <div class="activity">
-                    <div class="activity-icon bg-primary text-white shadow-primary">
-                        <i class="fas fa-dollar-sign"></i>
-                    </div>
-                    <div class="activity-detail">
-                      <div class="mb-2">
-                        <span class="text-job text-primary">12 hour ago</span>
-                        <span class="bullet"></span>
-                        <a class="text-job" href="#">View</a>
-                      </div>
-                      <p><span class="text-primary">Xin Ye</span> has made 3rd payment for project <a href="">#34</a>.</p>
-                    </div>
-                  </div>
-                  <div class="activity">
-                    <div class="activity-icon bg-primary text-white shadow-primary">
-                        <i class="fas fa-comment-dots"></i>
-                    </div>
-                    <div class="activity-detail">
-                      <div class="mb-2">
-                        <span class="text-job text-primary">Yesterday</span>
-                        <span class="bullet"></span>
-                        <a class="text-job" href="#">View</a>
-                      </div>
-                      <p><span class="text-primary">Yoona</span> has gave a feedback for project <a href="">#15</a>.</p>
-                    </div>
-                  </div>
+                  <?php endforeach; ?>
                 </div>
               </div>
             </div>
@@ -117,11 +265,7 @@
         </section>
       </div>
       <footer class="main-footer">
-        <div class="footer-left">
-          Copyright &copy; 2018 <div class="bullet"></div> Design By <a href="https://nauval.in/">Muhamad Nauval Azhar</a>
-        </div>
         <div class="footer-right">
-          
         </div>
       </footer>
     </div>
