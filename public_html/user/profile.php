@@ -1,7 +1,7 @@
 <?php 
   session_start();
   include_once "php/config.php";
-  if(!isset($_SESSION['unique_id'])){
+  if(!isset($_SESSION['user_id'])){
     header("location: login.php");
   }
 ?>
@@ -29,7 +29,70 @@
     } 
     html.ie-10 .ie-panel, html.lt-ie-10 .ie-panel {display: block;}
     
+
+/* CSS */
+.button-74 {
+  background-color: #fbeee0;
+  border: 2px solid #422800;
+  border-radius: 30px;
+  box-shadow: #422800 4px 4px 0 0;
+  color: #422800;
+  cursor: pointer;
+  display: inline-block;
+  font-weight: 600;
+  font-size: 18px;
+  padding: 0 18px;
+  line-height: 50px;
+  text-align: center;
+  text-decoration: none;
+  user-select: none;
+  -webkit-user-select: none;
+  touch-action: manipulation;
+}
+
+.button-74:hover {
+  background-color: #fff;
+}
+
+.button-74:active {
+  box-shadow: #422800 2px 2px 0 0;
+  transform: translate(2px, 2px);
+}
+
+@media (min-width: 768px) {
+  .button-74 {
+    min-width: 120px;
+    padding: 0 25px;
+  }
+}
+
+    .wrapper{
+      top: 20vh;
+      left: 40%;
+      text-align: center;
+      position: absolute;
+      max-width: 450px;
+      width: 100%;
+      border-radius: 16px;
+      box-shadow: 0 0 128px 0 rgba(0,0,0,0.1),
+                  0 32px 64px -48px rgba(0,0,0,0.5);
+      min-height: 50vh;
+      background: #f3ddc3;
+      padding: 0 10px;
+      
+    }
     
+    .probg{
+      opacity: 0.5;
+      z-index: -1;
+      position: relative; 
+      top: 0; 
+      left: 18%;
+      /* Preserve aspet ratio */
+      min-width: 100%;
+      min-height: 100%;
+    }
+
     </style>
 
     <!--this is time picker de js-->
@@ -65,7 +128,7 @@
                   <!-- RD Navbar Toggle-->
                   <button class="rd-navbar-toggle" data-rd-navbar-toggle=".rd-navbar-nav-wrap"><span></span></button>
                   <!-- RD Navbar Brand-->
-                  <div class="rd-navbar-brand"><a class="brand" href="index.html"><img class="brand-logo-dark" src="images/logo-default-465x134.png" alt="" width="232" height="67"/><img class="brand-logo-light" src="images/logo-inverse-86x104.png" alt="" width="86" height="104"/></a>
+                  <div class="rd-navbar-brand"><a class="brand" href="index.html"><img class="brand-logo-dark" src="images/logo.jpeg" alt="" width="232" height="67"/><img class="brand-logo-light" src="images/logo.jpeg" alt="" width="86" height="104"/></a>
                   </div>
                 </div>
                 <div class="rd-navbar-nav-wrap">
@@ -91,34 +154,38 @@
         </div>
       </header>
       
+      <div class="probg" >
+        <img src="images/profilebg.jpg" alt=""/>
+  </div>
+  
+      <div class="wrapper">
 
-      <section class="section section-md bg-default">
-      <div class="container">
-
+      
       <?php
 							$dbc = mysqli_connect("localhost","root","");
 							mysqli_select_db($dbc, "in_haus");
 							
-							$result=mysqli_query($dbc, "SELECT img FROM users WHERE unique_id='".$_SESSION['unique_id']."'");
-
-							$images = mysqli_fetch_assoc($result);
-							
-							$query="SELECT * FROM users WHERE unique_id='".$_SESSION['unique_id']."' ";
+							$query="SELECT * FROM user WHERE user_id='".$_SESSION['user_id']."' ";
 							
 							if($r = mysqli_query($dbc, $query ) ) {
 								
 									while ($row=mysqli_fetch_array($r)){
 									
 									echo"<tr height='50px'>";
-										echo'<td rowspan="3"><img src="php/images/';
-										echo $row["img"];
-										echo '" width="200" height="200"></td>';
-									
-										print "<td><h2>Name: {$row['fname']}</h2></td>";
+										print "<td><h2>Name: {$row['name']}</h2></td>";
 									print "</tr>";
 									
 									print"<tr height='50px'>";
-										print"<td><h2>email: {$row['email']}</h2></td>";
+										print"<td><p>email: {$row['email']}</p></td>";
+									print"</tr>";
+
+                  print"<tr height='50px'>";
+										print"<td><p>Access Level: {$row['access_level']}</p></td>";
+									print"</tr>";
+
+                  print"<tr height='50px'>";
+                 
+										print"<td> <button class='button-74' role='button'><a href='php/logout.php?logout_id= {$row['user_id']}' class='logout'>Logout</a></button></td>";
 									print"</tr>";
 									
 										}
@@ -129,20 +196,11 @@
 									'.</p><p>the query being run was : '.$query.'</p>';
 								}
 							
-							
-							
-
 								mysqli_close($dbc);
 							
 							?>
       
       </div>
-      </section>
-
-
-      
-
-
       
       
     </div>

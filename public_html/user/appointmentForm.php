@@ -1,7 +1,7 @@
 <?php 
   session_start();
   include_once "php/config.php";
-  if(!isset($_SESSION['unique_id'])){
+  if(!isset($_SESSION['user_id'])){
     header("location: login.php");
   }
   ?>
@@ -65,7 +65,7 @@
                   <!-- RD Navbar Toggle-->
                   <button class="rd-navbar-toggle" data-rd-navbar-toggle=".rd-navbar-nav-wrap"><span></span></button>
                   <!-- RD Navbar Brand-->
-                  <div class="rd-navbar-brand"><a class="brand" href="index.html"><img class="brand-logo-dark" src="images/logo.jpeg" alt="" width="232" height="67"/><img class="brand-logo-light" src="images/logo-inverse-86x104.png" alt="" width="86" height="104"/></a>
+                  <div class="rd-navbar-brand"><a class="brand" href="index.html"><img class="brand-logo-dark" src="images/logo.jpeg" alt="" width="232" height="67"/><img class="brand-logo-light" src="images/logo.jpeg" alt="" width="86" height="104"/></a>
                   </div>
                 </div>
                 <div class="rd-navbar-nav-wrap">
@@ -107,24 +107,44 @@
                 <br>
                 <div class="col-lg-12">
                   <div class="form-check">
-                  <input type="checkbox" class="form-check-input" id="course1" name="preferred_style[]" value="course1" />
-                  <label class="form-check-label" for="course1">Course 1</label>
+                  <input type="checkbox" class="form-check-input" id="mordernMinimalist" name="preferred_style[]" value="mordernMinimalist" />
+                  <label class="form-check-label" for="mordernMinimalist">Mordern Minimalist</label>
                 </div>
                 <div class="form-check">
-                  <input type="checkbox" class="form-check-input" id="course2" name="preferred_style[]" value="course2" />
-                  <label class="form-check-label" for="course2">Course 2</label>
+                  <input type="checkbox" class="form-check-input" id="Industrial" name="preferred_style[]" value="Industrial" />
+                  <label class="form-check-label" for="Industrial">Industrial Style</label>
                 </div>
                 <div class="form-check">
-                  <input type="checkbox" class="form-check-input" id="course3" name="preferred_style[]" value="course3"/>
-                  <label class="form-check-label" for="course3">Course 3</label>
+                  <input type="checkbox" class="form-check-input" id="Traditional/Classic" name="preferred_style[]" value="Traditional/Classic"/>
+                  <label class="form-check-label" for="Traditional/Classic">Traditional/Classic Style</label>
                 </div>
                 <div class="form-check">
-                  <input type="checkbox" class="form-check-input" id="course4" name="preferred_style[]" value="course4"/>
-                  <label class="form-check-label" for="course4">Course 4</label>
+                  <input type="checkbox" class="form-check-input" id="Art_Deco" name="preferred_style[]" value="Art_Deco"/>
+                  <label class="form-check-label" for="Art_Deco">Art Deco Style</label>
                 </div>
                 <div class="form-check">
-                  <input type="checkbox" class="form-check-input" id="course5" name="preferred_style[]" value="course5"/>
-                  <label class="form-check-label" for="course5">Course 5</label>
+                  <input type="checkbox" class="form-check-input" id="English_Country" name="preferred_style[]" value="English_Country"/>
+                  <label class="form-check-label" for="English_Country">English Country Style</label>
+                </div>
+                <div class="form-check">
+                  <input type="checkbox" class="form-check-input" id="Coastal" name="preferred_style[]" value="Coastal"/>
+                  <label class="form-check-label" for="Coastal">Coastal Style</label>
+                </div>
+                <div class="form-check">
+                  <input type="checkbox" class="form-check-input" id="Eclectic" name="preferred_style[]" value="Eclectic"/>
+                  <label class="form-check-label" for="Eclectic">Eclectic Style</label>
+                </div>
+                <div class="form-check">
+                  <input type="checkbox" class="form-check-input" id="Asian/Zen" name="preferred_style[]" value="Asian/Zen"/>
+                  <label class="form-check-label" for="Asian/Zen">Asian/Zen Style</label>
+                </div>
+                <div class="form-check">
+                  <input type="checkbox" class="form-check-input" id="Rustic" name="preferred_style[]" value="Rustic"/>
+                  <label class="form-check-label" for="Rustic">Rustic Style</label>
+                </div>
+                <div class="form-check">
+                  <input type="checkbox" class="form-check-input" id="Hi-Tech" name="preferred_style[]" value="Hi-Tech"/>
+                  <label class="form-check-label" for="Hi-Tech">Hi-Tech Style</label>
                 </div>
                 </div>
 
@@ -142,14 +162,20 @@
                 
               <div class="col-12">
               <p>Appointment Date</p>
-              <input class="form-input" id="date" type="date" name="date" >
-              <label class="form-label" for="date"></label>
+              <input id="date_picker" type="date" name="date">
               </div>
 
               <div class="col-12">
               <p>Appointment time</p>
-              <input class="form-input" id="time" type="time" name="time">
-              <label class="form-label" for="time"></label>
+              <input type="time" list="avail" name="time" >
+              <datalist id="avail">
+              <option value="09:00:00">
+              <option value="10:00:00">
+              <option value="11:00:00">
+              <option value="14:00:00">
+              <option value="15:00:00">
+              <option value="16:00:00">
+              </datalist>
               </div>
 
               <div class="col-12">
@@ -189,60 +215,17 @@
      <script src="js/core.min.js"></script>
     <script src="js/script2.js"></script> 
 
-    
+    <!--disable past date-->
+    <script language="javascript">
+    var today = new Date();
+    var dd = String(today.getDate()).padStart(2, '0');
+    var mm = String(today.getMonth() + 1).padStart(2, '0');
+    var yyyy = today.getFullYear();
 
-    <!--<script>
-       $window.on('load', function () {
-        // Page loader & Page transition
-        if (plugins.preloader.length && !isNoviBuilder) {
-          pageTransition({
-            target: document.querySelector( '.page1' ),
-            delay: 0,
-            duration: 500,
-            classIn: 'fadeIn',
-            classOut: 'fadeOut',
-            classActive: 'animated',
-            conditions: function (event, link) {
-              return !/(\#|callto:|tel:|mailto:|:\/\/)/.test(link) && !event.currentTarget.hasAttribute('data-lightgallery');
-            },
-            onTransitionStart: function ( options ) {
-              setTimeout( function () {
-                plugins.preloader.removeClass('loaded');
-              }, options.duration * .75 );
-            },
-            onReady: function () {
-              plugins.preloader.addClass('loaded');
-              windowReady = true;
-            }
-          });
-        }
-
-        // jQuery Count To
-        if ( plugins.counter.length ) {
-          for ( var i = 0; i < plugins.counter.length; i++ ) {
-            var
-              counter = $(plugins.counter[i]),
-              initCount = function () {
-                var counter = $(this);
-                if ( !counter.hasClass( "animated-first" ) && isScrolledIntoView( counter ) ) {
-                  counter.countTo({
-                    refreshInterval: 40,
-                    speed: counter.attr("data-speed") || 1000,
-                    from: 0,
-                    to: parseInt( counter.text(), 10 )
-                  });
-                  counter.addClass('animated-first');
-                }
-              };
-
-            $.proxy( initCount, counter )();
-            $window.on( "scroll", $.proxy( initCount, counter ) );
-          }
-        }
-
-      });
-
-    </script>-->
-
+    today = yyyy + '-' + mm + '-' + dd;
+    $('#date_picker').attr('min',today);
+    </script>
+    <!--end disable past date-->
+   
   </body>
 </html>

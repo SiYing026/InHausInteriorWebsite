@@ -1,16 +1,17 @@
 <?php 
   session_start();
-  if(isset($_SESSION['unique_id'])){
+  if(isset($_SESSION['user_id'])){
     header("location: index.html");
   }
 ?>
 
 <?php include_once "header.php"; ?>
 <body>
+<div class="body">
   <div class="wrapper">
     <section class="form login">
       <header>In_Haus</header>
-      <form action="#" method="POST" enctype="multipart/form-data" autocomplete="off">
+      <form action="php/login.php" method="POST" enctype="multipart/form-data" autocomplete="off">
         <div class="error-text"></div>
         <div class="field input">
           <label>Email Address</label>
@@ -22,15 +23,16 @@
           <i class="fas fa-eye"></i>
         </div>
         <div class="field button">
-          <input type="submit" name="submit" value="Continue to Chat">
+          <input type="submit" name="submit" value="Login">
         </div>
       </form>
-      <div class="link">Not yet signed up? <a href="index.php">Signup now</a></div>
+      <div class="link">Not yet signed up? <a href="signUp.php">Signup now</a></div>
     </section>
   </div>
   
   <script src="javascript/pass-show-hide.js"></script>
-  <script src="javascript/login.js"></script>
+  <script src="javascript/login2.js"></script>
 
+  </div>
 </body>
 </html>
