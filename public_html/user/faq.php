@@ -298,7 +298,6 @@ for (i = 0; i < len; i++) {
                 <li><a href="about-us.php">About us</a></li>
                 <li><a href="portfolio.php">Our Portfolio</a></li>
                 <li><a href="faq.php">FAQ</a></li>
-                <li><a href="tnc.php">Terms & Conditions</a></li>
               </ul>
             </div>
           </div>
