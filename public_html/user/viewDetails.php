@@ -16,6 +16,7 @@
   <link rel="stylesheet" href="../admin/assets/modules/aos/aos.css">
   <link rel="stylesheet" href="../admin/assets/modules/swiper/swiper-bundle.min.css">
   <link rel="stylesheet" href="../admin/assets/modules/chocolat/dist/css/chocolat.css">
+  <link rel="stylesheet" href="css/lightbox.css">
   <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/aframe/0.7.1/aframe.min.js"></script>
     <style>.ie-panel{display: none;background: #212121;padding: 10px 0;box-shadow: 3px 3px 5px 0 rgba(0,0,0,.3);clear: both;text-align:center;position: relative;z-index: 1;} html.ie-10 .ie-panel, html.lt-ie-10 .ie-panel {display: block;}</style>
   </head>
@@ -108,37 +109,72 @@
         <div class="container container-custom-width">
             <?php
                 $portfolio_images = explode(",",$row['portfolio_images']);
-                
             ?>
             
+            <style>
+        .overlay {
+            position: absolute;
+            height: 100%;
+            width: 100%;
+            background-color: transparent;
+            top: 0;
+            bottom: 0;
+            left: 0;
+            right: 0;
+        }
+
+        .overlay:hover {
+            opacity: 0.5;
+            background-color: black;
+        }
+        
+        .image {
+            width: 100%;
+            height: 100%;
+        }
+        
+        .icon {
+            position: absolute;
+            left: 50%;
+            bottom: 50%;
+            font-size: 25px;
+            cursor: pointer;
+            border-radius: 10rem;
+            background-color: transparent;
+            border: transparent;
+            color: #be985f;
+        }
+        
+            </style>
+
+
                 <?php 
                 foreach ($portfolio_images as $img) {
                     if ($count % 3 == 0)
                         echo '<div class="row row-custom-width row-30 row-xxl-100 row-flex" >';
                     
-//                    echo '<div class="col-sm-6 col-lg-4 wow fadeInRight" >
-//                        <img src="../admin/assets/img/'.$img.'? ">
-//                        <div class="overlay"><a href="../admin/assets/img/'.$img.'? " <i class="bi bi-zoom-in"></i></a></div>
-//                       </div>';
-                    
-                    echo ' <div class="gallery gallery-fw d-flex justify-content-center align-items-center" data-item-height="160">
-                        <div class="gallery-item" data-image="../admin/assets/img/'.$img.' " data-title="" href="../admin/assets/img/'.$img.' " '
-                            . 'title="" style="width: 200px; height:160px; margin-right: 0; background-image: url("../admin/assets/img/'.$img.' ");"></div>
-                            
-                      </div>';
+                    echo '<div class="col-sm-6 col-lg-4 wow fadeInRight" >
+                        
+                        <img src="../admin/assets/img/'.$img.'" class="image">
+                            <div class="overlay">
+                                <a href ="../admin/assets/img/'.$img.'" class="icon" ;">
+                                    <i class="bi bi-zoom-in"></i>
+                                </a>
+                            </div>
+                       </div>
+                ';
 
                     if ($count % 3 == 2)
                         echo '</div>';
                     
                     $count++;
-                }
+                }   
                 ?>
     </div>
-        
       </section>
     
         <?php
-            $panorama = $row['portfolio_pano'];
+            $panorama = $row['portfolio_panorama'];
         ?>
     
     <?php endwhile; ?>
@@ -182,6 +218,8 @@
       autoRotate: true,
       autoRotateSpeed: 1.0,
       controlBar: false,
+      zoom: 14,
+      zoomControl: false,
     });
 
     viewer.add(panoramaImage);
@@ -197,13 +235,13 @@
                 <li><a href="about-us.php">About us</a></li>
                 <li><a href="portfolio.php">Our Portfolio</a></li>
                 <li><a href="faq.php">FAQ</a></li>
-                <li><a href="tnc.php">Terms & Conditions</a></li>
               </ul>
             </div>
           </div>
         </div>
       </footer>
     </div>
+    
     <div class="snackbars" id="form-output-global"></div>
     <script src="js/core.min.js"></script>
     <script src="js/script.js"></script>
