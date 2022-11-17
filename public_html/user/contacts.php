@@ -1,5 +1,4 @@
-
-<!-- Price box minimal--><!DOCTYPE html>
+<!DOCTYPE html>
 <html class="wide wow-animation" lang="en">
   <head>
     <title>In Haus Interior + Staging</title>
@@ -24,23 +23,23 @@
       </div>
     </div>
     <div class="page">
-      <!-- Page Header-->
+<!-- Page Header-->
       <header class="section page-header">
-        <!-- RD Navbar-->
+<!-- RD Navbar-->
         <div class="rd-navbar-wrap">
           <nav class="rd-navbar rd-navbar-wide" data-layout="rd-navbar-fixed" data-sm-layout="rd-navbar-fixed" data-md-layout="rd-navbar-fixed" data-md-device-layout="rd-navbar-fixed" data-lg-layout="rd-navbar-static" data-lg-device-layout="rd-navbar-static" data-xl-layout="rd-navbar-static" data-xl-device-layout="rd-navbar-static" data-lg-stick-up-offset="46px" data-xl-stick-up-offset="46px" data-xxl-stick-up-offset="46px" data-lg-stick-up="true" data-xl-stick-up="true" data-xxl-stick-up="true">
             <div class="rd-navbar-main-outer">
               <div class="rd-navbar-main">
-                <!-- RD Navbar Panel-->
+<!--  RD Navbar Panel-->
                 <div class="rd-navbar-panel">
-                  <!-- RD Navbar Toggle-->
+<!--  RD Navbar Toggle-->
                   <button class="rd-navbar-toggle" data-rd-navbar-toggle=".rd-navbar-nav-wrap"><span></span></button>
-                  <!-- RD Navbar Brand-->
+<!--  RD Navbar Brand-->
                   <div class="rd-navbar-brand"><a class="brand" href="index.php"><img class="brand-logo-dark" src="images/logo.png" alt="" width="232" height="67"/><img class="brand-logo-light" src="images/logo-inverse-86x104.png" alt="" width="86" height="104"/></a>
                   </div>
                 </div>
                 <div class="rd-navbar-nav-wrap">
-                  <!-- RD Navbar Nav-->
+<!--  RD Navbar Nav-->
                   <ul class="rd-navbar-nav">
                       <li class="rd-nav-item"><a class="rd-nav-link" href="index.php">Home</a>
                       </li>
@@ -66,7 +65,7 @@
               View our contacts or write us a message</pre-footer-classic>
         </div>
       </section>
-      <!-- Blurb minimal-->
+<!-- Blurb minimal-->
       <section class="section section-md bg-default">
         <div class="container">
           <div class="row row-40">
@@ -108,55 +107,13 @@
           </div>
         </div>
       </section>
-      <!-- Get in touch with us-->
+    <!--Get in touch with us-->
       <section class="section section-md bg-default">
         <div class="container">
           <h4>Get in touch with us</h4>
           <!-- RD Mailform-->
-          <form class="rd-form rd-mailform form-boxed" data-form-output="form-output-global" data-form-type="contact" method="post" >
-              <?php
-                    use PHPMailer\PHPMailer\PHPMailer;
+          <form class="rd-form rd-mailform form-boxed" data-form-output="form-output-global" data-form-type="contact" action="contacts.php" method="post" >
 
-                    require_once 'phpmailer/Exception.php';
-                    require_once 'phpmailer/PHPMailer.php';
-                    require_once 'phpmailer/SMTP.php';
-
-                    $mail = new PHPMailer(true);
-
-                    $alert = '';
-
-                    if(isset($_POST['submit'])){
-                        $name = $_POST['name'];
-                        $email = $_POST['email'];
-                        $enquiry = $_POST['enquiry'];
-                        $message = $_POST['message'];
-
-                        try{
-                            $mail->isSMTP();
-                            $mail->Host = 'smtp.gmail.com';
-                            $mail->SMTPAuth = true;
-                            $mail->Username = 'siying060202@gmail.com'; // Gmail address which you want to use as SMTP server
-                            $mail->Password = 'tnuccpcuysckrzxl'; // Gmail address Password
-                            $mail->SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS;
-                            $mail->Port = '587';
-
-                            $mail->setFrom('siying060202@gmail.com'); // Gmail address which you used as SMTP server
-                            $mail->addAddress('siying060202@gmail.com'); // Email address where you want to receive emails (you can use any of your gmail address including the gmail address which you used as SMTP server)
-
-                            $mail->isHTML(true);
-                            $mail->Subject = "In Haus : $subject";
-                            $mail->Body = "Topic : $enquiry <br>Name: $name <br><p>Message : $message</p>";
-
-                            $mail->send();
-                            echo "<p style='color:black; text-align: left;'><strong>Message Sent! Thank you for contacting us.</strong></p>";
-
-                        }catch (Exception $e){
-                            $alert = '<div class="alert-error">
-                            <span>'.$e->getMessage().'</span>
-                            </div>';
-                        }
-                    }
-            ?>           
             <div class="row row-50">
                 <div class="col-12">
                     <p class="big">Please select a topic below related to your enquiry: 
@@ -204,16 +161,82 @@
                 </div>
               </div>
               <div class="col-md-12">
-                <button class="button button-default" type="submit" name="submit">Send</button>
+                <input type="submit" class="button button-default" name="submit" value="Submit"></input>
+<!--                  <p><input type="submit" value="Submit" name="submit" /></p>-->
               </div>
             </div>
+              
+              <?php
+                
+                    use PHPMailer\PHPMailer\PHPMailer;
+                    use PHPMailer\PHPMailer\Exception;
+
+                    require_once 'phpmailer/src/Exception.php';
+                    require_once 'phpmailer/src/PHPMailer.php';
+                    require_once 'phpmailer/src/SMTP.php';
+
+                    $alert = '';
+                    
+                    if(isset($_POST['submit'])) {
+                        
+                        $mail = new PHPMailer(true);
+                        
+                        $name = $_POST['name'];
+                        $email = $_POST['email'];
+                        $enquiry = $_POST['enquiry'];
+                        $message = $_POST['message'];
+                        
+                        if (!empty($_POST['name']) && !empty($_POST['email']) & !empty($_POST['enquiry']) & !empty($_POST['message'])){
+                           
+                            try {
+                                $mail->isSMTP();
+                                $mail->Host = 'smtp.gmail.com';
+                                $mail->SMTPAuth = true;
+                                $mail->Username = 'siying060202@gmail.com'; // Gmail address which you want to use as SMTP server
+                                $mail->Password = 'emnpytwvoujvnzgx'; // Gmail address Password
+                                $mail->SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS;
+                                $mail->Port = '587';
+
+                                $mail->setFrom('siying060202@gmail.com'); // Gmail address which you used as SMTP server
+                                $mail->addAddress('siying060202@gmail.com'); // Email address where you want to receive emails (you can use any of your gmail address including the gmail address which you used as SMTP server)
+    
+                                $mail->isHTML(true);
+                                $mail->Subject = "In Haus : $enquiry";
+                                $mail->Body = "Name: $name <br>Email: $email <br><p>Message : $message</p>";
+                                
+                                $mail->send();
+                                
+                                echo 
+                                "
+                                    <script>
+                                        alert('Sent successfully');
+                                        document.location.href = 'index.php';
+                                    </script>
+                                ";
+        
+                            }catch (Exception $e){
+                                $alert = '<div class="alert-error">
+                                <span>'.$e->getMessage().'</span>
+                                </div>';
+                            }
+                        } 
+                        
+                        else {
+                                echo "<p style='color:red; text-align: left;'><strong>Please fill in.</strong></p>";
+                            }
+                    }
+            ?> 
           </form>
         </div>
       </section>
-      <!-- Page Footer-->
+<!-- Page Footer-->
       <div class="pre-footer-classic bg-gray-700 context-dark">
         <div class="container">
           <div class="row row-30 justify-content-lg-between">
+              <div class="col-lg-4">
+              <div class="img-wrap-1"><img src="images/signature.png" alt="" width="300" height="100"/>
+              </div>
+            </div>
             <div class="col-sm-6 col-lg-3 col-xl-3">
               <h5>Location</h5>
               <ul class="list list-sm">
@@ -239,42 +262,26 @@
               </dl>
               <dl class="list-terms-custom">
                 <dt>Email.</dt>
-                <dd><a class="link-default" href="mailto:#">Info@demolink.org</a></dd>
+                <dd><a class="link-default" href="mailto:#">info@inhausinterior.com</a></dd>
               </dl>
               <ul class="list-inline list-inline-sm">
-                <li><a class="icon icon-sm icon-gray-filled icon-circle mdi mdi-facebook" href="#"></a></li>
-                <li><a class="icon icon-sm icon-gray-filled icon-circle mdi mdi-instagram" href="#"></a></li>
-                <li><a class="icon icon-sm icon-gray-filled icon-circle mdi mdi-behance" href="#"></a></li>
-                <li><a class="icon icon-sm icon-gray-filled icon-circle mdi mdi-twitter" href="#"></a></li>
+                <li><a class="icon icon-sm icon-gray-filled icon-circle mdi mdi-whatsapp" href="https://wa.link/l3cci2" target="_blank"></a></li>
+                <li><a class="icon icon-sm icon-gray-filled icon-circle mdi mdi-facebook" href="https://www.facebook.com/" target="_blank"></a></li>
+                <li><a class="icon icon-sm icon-gray-filled icon-circle mdi mdi-instagram" href="https://www.instagram.com/" target="_blank"></a></li>
               </ul>
             </div>
-            <div class="col-lg-4">
-              <h5>Newsletter</h5>
-              <form class="rd-form rd-mailform" data-form-output="form-output-global" data-form-type="contact" method="post" action="bat/rd-mailform.php">
-                <div class="form-wrap form-wrap-icon">
-                  <div class="form-icon mdi mdi-email-outline"></div>
-                  <input class="form-input" id="footer-email" type="email" name="email" data-constraints="@Email @Required">
-                  <label class="form-label" for="footer-email">E-mail</label>
-                </div>
-                <div class="button-wrap">
-                  <button class="button button-default button-invariable" type="submit">Subscribe</button>
-                </div>
-              </form>
-            </div>
+            
           </div>
         </div>
       </div>
       <footer class="section footer-classic context-dark text-center">
         <div class="container">
           <div class="row row-15 justify-content-lg-between">
-            <div class="col-lg-4 col-xl-3 text-lg-left">
-              <p class="rights"><span>&copy;&nbsp;</span><span class="copyright-year"></span>. All Rights Reserved. Design by <a href="https://www.templatemonster.com">TemplateMonster</a></p>
-            </div>
             <div class="col-lg-5 col-xl-6">
               <ul class="list-inline list-inline-lg text-uppercase">
-                <li><a href="about-us.html">About us</a></li>
-                <li><a href="#">Our Portfolio</a></li>
-                <li><a href="#">Blog</a></li>
+                <li><a href="about-us.php">About us</a></li>
+                <li><a href="portfolio.php">Our Portfolio</a></li>
+                <li><a href="faq.php">FAQ</a></li>
               </ul>
             </div>
           </div>
