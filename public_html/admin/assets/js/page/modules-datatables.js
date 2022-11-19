@@ -40,7 +40,7 @@ $("#table-2").dataTable({
 });
 $("#consultations_table").dataTable({
   "columnDefs": [
-    { "sortable": false, "targets": [5] }
+    { "sortable": false, "targets": [5,6] }
   ]
 });
 $("#projects_table").dataTable({
