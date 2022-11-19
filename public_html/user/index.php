@@ -306,15 +306,10 @@
                   <div class="quote-body">
                     <?php
                         if ($dbc = mysqli_connect('localhost','root','','in_haus')){
-
                             $sql="SELECT comment FROM feedback WHERE feedback_id =1";
                             $result = mysqli_query($dbc,$sql);
                             while($row = mysqli_fetch_assoc($result)){
                                 echo "<q>{$row['comment']}</q>";
-                            $sql="SELECT feedback_comment FROM feedback WHERE feedback_id =1";
-                            $result = mysqli_query($dbc,$sql);
-                            while($row = mysqli_fetch_assoc($result)){
-                                echo "<q>{$row['feedback_comment']}</q>";
                             }
                         }
                     ?>
@@ -331,16 +326,7 @@
                                 $row = mysqli_fetch_assoc($result);
                                 
                                     echo "<q>{$row['name']}</q>";
-
-                                $sql = "SELECT c.cust_name "
-                                        . " FROM project p, feedback f, customer c "
-                                        . "WHERE f.project_id = p.project_id "
-                                        . "AND p.cust_id = c.cust_id "
-                                        . "AND f.feedback_id = 1";
-                                $result = mysqli_query($dbc,$sql);
-                                while($row = mysqli_fetch_assoc($result)){
-                                    echo "<q>{$row['cust_name']}</q>";
-                                }
+                                
                             }
                         ?>
                       </cite>
@@ -354,11 +340,6 @@
                             $result = mysqli_query($dbc,$sql);
                             while($row = mysqli_fetch_assoc($result)){
                                 echo "<q>{$row['comment']}</q>";
-                            $sql="SELECT feedback_comment FROM feedback WHERE feedback_id =2";
-                            $result = mysqli_query($dbc,$sql);
-                            while($row = mysqli_fetch_assoc($result)){
-                                echo "<q>{$row['feedback_comment']}</q>";
-
                             }
                         }
                     ?>
@@ -375,17 +356,7 @@
                                 $row = mysqli_fetch_assoc($result);
                                 
                                     echo "<q>{$row['name']}</q>";
-  
-                                $sql = "SELECT c.cust_name "
-                                        . " FROM project p, feedback f, customer c "
-                                        . "WHERE f.project_id = p.project_id "
-                                        . "AND p.cust_id = c.cust_id "
-                                        . "AND f.feedback_id = 2";
-                                $result = mysqli_query($dbc,$sql);
-                                while($row = mysqli_fetch_assoc($result)){
-                                    echo "<q>{$row['cust_name']}</q>";
-                                }
-
+                                
                             }
                         ?>
                       </cite>
@@ -459,19 +430,12 @@
                             $result = mysqli_query($dbc,$sql);
                             while($row = mysqli_fetch_assoc($result)){
                                 echo "<q>{$row['comment']}</q>";
-
-                            $sql="SELECT feedback_comment FROM feedback WHERE feedback_id =3";
-                            $result = mysqli_query($dbc,$sql);
-                            while($row = mysqli_fetch_assoc($result)){
-                                echo "<q>{$row['feedback_comment']}</q>";
-
                             }
                         }
                     ?>
                   </div>
                   <div class="quote-footer">
                       <cite class="quote-minimal-cite">
-
                         <?php
                             if ($dbc = mysqli_connect('localhost','root','','in_haus')){
                                 $sql = "SELECT u.name as name "
@@ -482,79 +446,7 @@
                                 $row = mysqli_fetch_assoc($result);
                                 
                                     echo "<q>{$row['name']}</q>";
-
-                          <?php
-                            if ($dbc = mysqli_connect('localhost','root','','in_haus')){
-                                $sql = "SELECT c.cust_name "
-                                        . " FROM project p, feedback f, customer c "
-                                        . "WHERE f.project_id = p.project_id "
-                                        . "AND p.cust_id = c.cust_id "
-                                        . "AND f.feedback_id = 3";
-                                $result = mysqli_query($dbc,$sql);
-                                while($row = mysqli_fetch_assoc($result)){
-                                    echo "<q>{$row['cust_name']}</q>";
-                                }
-                            }
-                        ?>
-                      </cite>
-                  </div>
-                </article>
-                <article class="quote-minimal">
-                  <div class="quote-body">
-                    <?php
-                        if ($dbc = mysqli_connect('localhost','root','','in_haus')){
-                            $sql="SELECT feedback_comment FROM feedback WHERE feedback_id =4";
-                            $result = mysqli_query($dbc,$sql);
-                            while($row = mysqli_fetch_assoc($result)){
-                                echo "<q>{$row['feedback_comment']}</q>";
-                            }
-                        }
-                    ?>
-                  </div>
-                  <div class="quote-footer">
-                      <cite class="quote-minimal-cite">
-                          <?php
-                            if ($dbc = mysqli_connect('localhost','root','','in_haus')){
-                                $sql = "SELECT c.cust_name "
-                                        . " FROM project p, feedback f, customer c "
-                                        . "WHERE f.project_id = p.project_id "
-                                        . "AND p.cust_id = c.cust_id "
-                                        . "AND f.feedback_id = 4";
-                                $result = mysqli_query($dbc,$sql);
-                                while($row = mysqli_fetch_assoc($result)){
-                                    echo "<q>{$row['cust_name']}</q>";
-                                }
-                            }
-                        ?>
-                      </cite>
-                  </div>
-                </article>
-                  <article class="quote-minimal">
-                  <div class="quote-body">
-                    <?php
-                        if ($dbc = mysqli_connect('localhost','root','','in_haus')){
-                            $sql="SELECT feedback_comment FROM feedback WHERE feedback_id =5";
-                            $result = mysqli_query($dbc,$sql);
-                            while($row = mysqli_fetch_assoc($result)){
-                                echo "<q>{$row['feedback_comment']}</q>";
-                            }
-                        }
-                    ?>
-                  </div>
-                  <div class="quote-footer">
-                      <cite class="quote-minimal-cite">
-                          <?php
-                            if ($dbc = mysqli_connect('localhost','root','','in_haus')){
-                                $sql = "SELECT c.cust_name "
-                                        . " FROM project p, feedback f, customer c "
-                                        . "WHERE f.project_id = p.project_id "
-                                        . "AND p.cust_id = c.cust_id "
-                                        . "AND f.feedback_id = 5";
-                                $result = mysqli_query($dbc,$sql);
-                                while($row = mysqli_fetch_assoc($result)){
-                                    echo "<q>{$row['cust_name']}</q>";
-                                }
-
+                                
                             }
                         ?>
                       </cite>
@@ -564,7 +456,6 @@
             </div>
             <div class="col-lg-6">
               <div class="box-border-wrap box-border-wrap-left">
-
                 <div class="row"><a class="col-6 col-md-4 box-border" href="https://www.underarmour.com.my/" target="_blank"><img src="images/brand-1.png" alt="" width="196" height="162"/></a>
                     <a class="col-6 col-md-4 box-border" href="https://www.petloverscentre.com.my" target="_blank"><img src="images/brand-2.png" alt="" width="196" height="162"/></a>
                     <a class="col-6 col-md-4 box-border" href="https://talentkraft.com" target="_blank"><img src="images/brand-3.png" alt="" width="196" height="162"/></a>
@@ -572,20 +463,6 @@
                     <a class="col-6 col-md-4 box-border" href="https://global.fujifilm.com" target="_blank"><img src="images/brand-5.png" alt="" width="196" height="162"/></a>
                     <a class="col-6 col-md-4 box-border" href="https://mix.com.my" target="_blank"><img src="images/brand-6.png" alt="" width="196" height="162"/></a>
                 </div>
-
-                <div class="row"><a class="col-6 col-md-4 box-border" href="#">
-                        <img src="images/brand-1.png" alt="" width="196" height="162"/></a>
-                    <a class="col-6 col-md-4 box-border" href="#">
-                        <img src="images/brand-2.png" alt="" width="196" height="162"/></a>
-                    <a class="col-6 col-md-4 box-border" href="#">
-                        <img src="images/brand-3.png" alt="" width="196" height="162"/></a>
-                    <a class="col-6 col-md-4 box-border" href="#">
-                        <img src="images/brand-4.png" alt="" width="196" height="162"/></a>
-                    <a class="col-6 col-md-4 box-border" href="#">
-                        <img src="images/brand-5.png" alt="" width="196" height="162"/></a>
-                    <a class="col-6 col-md-4 box-border" href="#">
-                    <div class="icon icon-sm mdi mdi-arrow-right"></div></a></div>
-
               </div>
             </div>
           </div>
