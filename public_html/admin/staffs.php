@@ -1,11 +1,12 @@
 <?php
   $page = "staffs";
+  $managerAccessOnly = true;
   session_start();
 
 	$dbc = mysqli_connect('localhost', 'root', '');
 	mysqli_select_db($dbc, 'in_haus');
 
-	$query = 'SELECT * FROM admin';
+	$query = "SELECT * FROM user WHERE access_level != 'Normal User'";
 
 	if (!$r = mysqli_query($dbc, $query)) {
 		echo '<p style="color:red;">Could not retrieve the data because: <br/>' . mysqli_error($dbc) . '</p><p>The query being run was: ' . $query . '</p>';
@@ -17,9 +18,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta content="width=device-width, initial-scale=1, maximum-scale=1, shrink-to-fit=no" name="viewport">
-  <title>Consultations &mdash; In Haus</title>
+  <?php include("head.php"); ?>
 
   <!-- General CSS Files -->
   <link rel="stylesheet" href="assets/modules/bootstrap/css/bootstrap.min.css">
@@ -83,13 +82,15 @@
                           <tbody>  
                             <?php while ($row = mysqli_fetch_array($r)): ?>
                             <tr>                              
-                                <td><a href="staff.php?admin_id=<?php echo $row['admin_id']; ?>"><?php echo $row['admin_id']; ?></a></td>
-                                <td><?php echo $row['admin_name']; ?></td>
-                                <td><?php echo $row['admin_email']; ?></td>
-                                <?php if ($row['admin_position'] == "Project Leader"): ?>
-                                <td><span class="badge badge-primary"><?php echo $row['admin_position']; ?></span></td>
+                                <td><a href="staff.php?admin_id=<?php echo $row['user_id']; ?>"><?php echo $row['user_id']; ?></a></td>
+                                <td><?php echo $row['name']; ?></td>
+                                <td><?php echo $row['email']; ?></td>
+                                <?php if ($row['access_level'] == "Project Manager"): ?>
+                                <td><span class="badge badge-dark"><?php echo $row['access_level']; ?></span></td>
+                                <?php elseif ($row['access_level'] == "Project Leader"): ?>
+                                <td><span class="badge badge-secondary"><?php echo $row['access_level']; ?></span></td>
                                 <?php else: ?>
-                                <td><span class="badge badge-secondary"><?php echo $row['admin_position']; ?></span></td>
+                                <td><span class="badge badge-primary"><?php echo $row['access_level']; ?></span></td>
                                 <?php endif; ?>
                             </tr> 
                             <?php endwhile; ?>

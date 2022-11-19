@@ -1,5 +1,6 @@
 <?php
   $page = "staffs";
+  $managerAccessOnly = true;
   session_start();
 
   $dbc = mysqli_connect('localhost', 'root', '');
@@ -13,15 +14,17 @@
 		$admin_id = $_GET['admin_id'];
 		$url = "staff.php?admin_id=" . $admin_id;
 
-		$query = 'SELECT * FROM admin WHERE admin_id = ' . $admin_id;
-		
-		if ($result = mysqli_query($dbc, $query)) {
-			$row = mysqli_fetch_assoc($result);
-			$admin_name = $row['admin_name'];
-      $admin_email = $row['admin_email'];
+		$query = 'SELECT * FROM user WHERE user_id = ' . $admin_id . ' AND access_level != "Normal User"';
+		$result = mysqli_query($dbc, $query);
+    $row = mysqli_fetch_assoc($result);
+
+		if (!empty($row)) {
+			$admin_name = $row['name'];
+      $admin_email = $row['email'];
 		}
 		else {
-			$fail_alert = '<p style="color:red;">Could not retrieve the data because: <br/>' . mysqli_error($dbc) . '</p><p>The query being run was: ' . $query . '</p>';
+      header("Location: error_404.php");
+			// $fail_alert = '<p style="color:red;">Could not retrieve the data because: <br/>' . mysqli_error($dbc) . '</p><p>The query being run was: ' . $query . '</p>';
 		}
 	}
 	else {
@@ -32,18 +35,33 @@
     $admin_name = $_POST['name'];
     $admin_email = $_POST['email'];
 
-    // update database
-		$query = "UPDATE admin SET 
-              admin_name = '$admin_name', 
-              admin_email = '$admin_email'
-              WHERE admin_id = '$admin_id'";
+    // check if email exist
+    $query = "SELECT * FROM user WHERE email = '$admin_email' AND access_level != 'Normal User'";
 
-    if (mysqli_query($dbc, $query)) {
-      $success_alert = "Staff has been updated successfully.";
+    $r = mysqli_query($dbc, $query);
+    $row = mysqli_fetch_array($r);
+
+    if (isset($row)) {
+      $emailInvalid = true;
+      $okay = false;
     }
-    else {
-      $fail_alert = "Could not update the staff because: <br/>" . mysqli_error($dbc) . "The query was: " . $query;
+
+    if ($okay) {
+      // update database
+      $query = "UPDATE user SET 
+      name = '$admin_name', 
+      email = '$admin_email'
+      WHERE user_id = '$admin_id'";
+
+      if (mysqli_query($dbc, $query)) {
+        $success_alert = "Staff has been updated successfully.";
+      }
+      else {
+        $fail_alert = "Could not update the staff because: <br/>" . mysqli_error($dbc) . "The query was: " . $query;
+      }
+
     }
+
   }
 
   if (isset($_POST['submitted'])) {
@@ -53,7 +71,7 @@
     $confirm_password = $_POST['confirm_password'];
 
     // check if email exist
-    $query = "SELECT * FROM admin WHERE admin_email = '$admin_email'";
+    $query = "SELECT * FROM user WHERE email = '$admin_email' AND access_level != 'Normal User'";
 
     $r = mysqli_query($dbc, $query);
     $row = mysqli_fetch_array($r);
@@ -69,8 +87,8 @@
     }
 
     if ($okay) {
-      $query = "INSERT INTO admin (admin_id, admin_name, admin_email, admin_password, admin_position) 
-                VALUES ('', '$admin_name', '$admin_email', MD5('$admin_password'), DEFAULT)";
+      $query = "INSERT INTO user (user_id, name, email, password, phone_no, access_level, status) 
+                VALUES ('', '$admin_name', '$admin_email', MD5('$admin_password'), DEFAULT, 'Project Leader', DEFAULT)";
 
       if (mysqli_query($dbc, $query)) {
         $admin_id = mysqli_insert_id($dbc);
@@ -89,9 +107,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta content="width=device-width, initial-scale=1, maximum-scale=1, shrink-to-fit=no" name="viewport">
-  <title>Bootstrap Components &rsaquo; Form &mdash; Stisla</title>
+  <?php include("head.php"); ?>
 
   <!-- General CSS Files -->
   <link rel="stylesheet" href="assets/modules/bootstrap/css/bootstrap.min.css">
@@ -205,14 +221,18 @@
                         </div>
                         <?php endif; ?>
                         </form>
-                        <!-- <?php if (!empty($admin_id)): ?>
+                        <?php if (!empty($admin_id)): ?>
                           <div class="form-group row">
                             <label class="col-sm-3 col-form-label">Password</label>
                             <div class="col-sm-9">
-                                <a href="change_password.php" class="btn btn-primary" style="border-radius: 30px;">Change Password</a>
+                              <form action="change_password.php" method="post">
+                                <input type="hidden" name="id" value="<?php echo $admin_id; ?>">
+                                <input type="hidden" name="email" value="<?php echo $admin_email; ?>">
+                                <input type="submit" name="info" value="Change Password" class="btn btn-primary" style="border-radius: 30px;">
+                              </form>
                             </div>
                           </div>
-                        <?php endif; ?> -->
+                        <?php endif; ?>
                       </div>
                   </div>
               </div>
