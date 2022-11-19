@@ -41,9 +41,9 @@
                 <div class="rd-navbar-nav-wrap">
 <!--  RD Navbar Nav-->
                   <ul class="rd-navbar-nav">
-                      <li class="rd-nav-item"><a class="rd-nav-link" href="index.php">Home</a>
+                      <li class="rd-nav-item active"><a class="rd-nav-link" href="index.php">Home</a>
                       </li>
-                      <li class="rd-nav-item active"><a class="rd-nav-link" href="about-us.php">About</a>
+                      <li class="rd-nav-item"><a class="rd-nav-link" href="about-us.php">About</a>
                       </li>
                       <li class="rd-nav-item"><a class="rd-nav-link" href="portfolio.php">Portfolio</a>
                       </li>
