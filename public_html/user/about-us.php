@@ -48,10 +48,14 @@
                       </li>
                       <li class="rd-nav-item"><a class="rd-nav-link" href="portfolio.php">Portfolio</a>
                       </li>
-                      <li class="rd-nav-item"><a class="rd-nav-link" href="consultation-form.php">Consultation</a>
+                      <li class="rd-nav-item"><a class="rd-nav-link" href="appointmentForm.php">Consultation</a>
                       </li>
                       <li class="rd-nav-item"><a class="rd-nav-link" href="contacts.php">Contacts</a>
                       </li>
+                      <li class="rd-nav-item"><a class="rd-nav-link" href="users.php">Chat</a>
+                    </li>
+                    <li class="rd-nav-item"><a class="rd-nav-link" href="profile.php">Profile</a>
+                    </li>
                     </ul>
                 </div>
               </div>
