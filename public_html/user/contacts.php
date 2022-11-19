@@ -114,6 +114,57 @@
           <!-- RD Mailform-->
           <form class="rd-form rd-mailform form-boxed" data-form-output="form-output-global" data-form-type="contact" action="contacts.php" method="post" >
 
+
+              <?php
+                    use PHPMailer\PHPMailer\PHPMailer;
+
+                    require_once 'phpmailer/Exception.php';
+                    require_once 'phpmailer/PHPMailer.php';
+                    require_once 'phpmailer/SMTP.php';
+
+                    $mail = new PHPMailer(true);
+
+                    $alert = '';
+
+                    if(isset($_POST['submit'])){
+                        $name = $_POST['name'];
+                        $email = $_POST['email'];
+                        $enquiry = $_POST['enquiry'];
+                        $message = $_POST['message'];
+                        
+//                        try{
+//                            $mail->isSMTP();
+//                            $mail->Host = 'smtp.gmail.com';
+//                            $mail->SMTPAuth = true;
+//                            $mail->Username = 'siying060202@gmail.com'; // Gmail address which you want to use as SMTP server
+//                            $mail->Password = 'tnuccpcuysckrzxl'; // Gmail address Password
+//                            $mail->SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS;
+//                            $mail->Port = '587';
+//
+//                            $mail->setFrom('siying060202@gmail.com'); // Gmail address which you used as SMTP server
+//                            $mail->addAddress('siying060202@gmail.com'); // Email address where you want to receive emails (you can use any of your gmail address including the gmail address which you used as SMTP server)
+//
+//                            $mail->isHTML(true);
+//                            $mail->Subject = "In Haus : $enquiry";
+//                            $mail->Body = "Name: $name <br>Email: $email <br><p>Message : $message</p>";
+//
+////                            $mail->send();
+////                            echo "<p style='color:black;'><strong>Message Sent! Thank you for contacting us.</strong></p>";
+////                            
+//                            if(!$mail->send()) {
+//                                echo "Mailer Error: " . $mail->ErrorInfo;
+//                            } 
+//                            else {
+//                                echo "<p style='color:red'>Message Sent! Thank you for contacting us.</p>";
+//                            }
+//    
+//                        }catch (Exception $e){
+//                            $alert = '<div class="alert-error">
+//                            <span>'.$e->getMessage().'</span>
+//                            </div>';
+//                        }
+                    }
+            ?>       
             <div class="row row-50">
                 <div class="col-12">
                     <p class="big">Please select a topic below related to your enquiry: 
@@ -282,6 +333,7 @@
                 <li><a href="about-us.php">About us</a></li>
                 <li><a href="portfolio.php">Our Portfolio</a></li>
                 <li><a href="faq.php">FAQ</a></li>
+
               </ul>
             </div>
           </div>
