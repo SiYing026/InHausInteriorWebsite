@@ -1,5 +1,4 @@
-
-<!-- Price box minimal--><!DOCTYPE html>
+<!DOCTYPE html>
 <html class="wide wow-animation" lang="en">
   <head>
     <title>In Haus Interior + Staging</title>
@@ -97,14 +96,14 @@
             </div>
           </div>
           <ul class="project-list">
-            <li class="bg-image" style="background-image: url(images/home-3-project-1.jpg)"><a href="#">Architecture</a></li>
-            <li class="bg-image" style="background-image: url(images/home-3-project-2.jpg)"><a href="#">3d modeling</a></li>
-            <li class="bg-image" style="background-image: url(images/home-3-project-4.jpg)"><a href="#">Design</a></li>
+            <li class="bg-image" style="background-image: url(images/home-3-project-1.jpg)"><a href="" style="pointer-events: none">Architecture</a></li>
+            <li class="bg-image" style="background-image: url(images/home-3-project-2.jpg)"><a href="" style="pointer-events: none">3d modeling</a></li>
+            <li class="bg-image" style="background-image: url(images/home-3-project-4.jpg)"><a href="" style="pointer-events: none">Design</a></li>
           </ul>
         </section>
       </section>
-      <!-- Portfolio-->
-      <section class="section section-lg bg-default section-lined">
+<!--       Portfolio -->
+        <section class="section section-lg bg-default section-lined">
         <div class="container container-lined">
           <div class="row">
             <div class="col-md-4"></div>
@@ -115,58 +114,64 @@
         <div class="container container-custom-width">
           <h3 class="text-center">Our Latest Projects</h3>
           <div class="row row-custom-width row-30 row-xxl-100 row-flex">
+              <?php
+
+                    $dbc = mysqli_connect('localhost', 'root', '');
+                    mysqli_select_db($dbc, 'in_haus');
+
+                    $query = 'SELECT * FROM portfolio ORDER BY portfolio_id DESC LIMIT 3';
+
+                    if (!$r = mysqli_query($dbc, $query)) {
+                            echo '<p style="color:red;">Could not retrieve the data because: <br/>' . mysqli_error($dbc) . '</p><p>The query being run was: ' . $query . '</p>';
+                    }
+
+                    mysqli_close($dbc);
+
+            ?>
+          <?php while ($row = mysqli_fetch_array($r)): ?>
             <div class="col-sm-6 col-lg-4 wow fadeInRight">
-              <div class="project-grid" style="background-image: url(images/projects-1-518x373.jpg);">
-                <div class="inner"><img src="images/bg-pattern-transparent.png" alt=""/>
-                  <h5 class="title text-capitalize font-weight-medium"><a href="#">Eastwood Hotel</a></h5>
-                  <p class="font-weight-regular exeption">We deliver reliable architectural solutions to our individual and corporate clients throughout the USA.</p><a class="button button-default" href="#">View</a>
+              <div class="project-grid" style="background-image: url(<?php echo "../admin/assets/img/" . $row['portfolio_thumbnail']; ?>);">
+                <div class="inner">
+                  <h5 class="title text-capitalize font-weight-medium"><a href="#"><?php echo $row['portfolio_style']; ?></a></h5>
+                  <p class="font-weight-regular exeption"><?php echo $row['portfolio_description']; ?></p>
+                  <a class="button button-default" href="viewDetails.php?portfolio_id=<?php echo $row['portfolio_id']; ?>" class="details-link" target="_blank" >View</a>
                 </div>
               </div>
             </div>
-            <div class="col-sm-6 col-lg-4 wow fadeInRight" data-wow-delay="0.2s">
-              <div class="project-grid" style="background-image: url(images/projects-2-518x373.jpg);">
-                <div class="inner"><img src="images/bg-pattern-transparent.png" alt=""/>
-                  <h5 class="title text-capitalize font-weight-medium"><a href="#">Southward Concert Hall</a></h5>
-                  <p class="font-weight-regular exeption">We deliver reliable architectural solutions to our individual and corporate clients throughout the USA.</p><a class="button button-default" href="#">View</a>
-                </div>
-              </div>
-            </div>
-            <div class="col-sm-6 col-lg-4 wow fadeInRight" data-wow-delay="0.4s">
-              <div class="project-grid" style="background-image: url(images/projects-3-518x373.jpg);">
-                <div class="inner"><img src="images/bg-pattern-transparent.png" alt=""/>
-                  <h5 class="title text-capitalize font-weight-medium"><a href="#">California Mega Mall</a></h5>
-                  <p class="font-weight-regular exeption">We deliver reliable architectural solutions to our individual and corporate clients throughout the USA.</p><a class="button button-default" href="#">View</a>
-                </div>
-              </div>
-            </div>
-            <div class="col-sm-6 col-lg-4 wow fadeInRight" data-wow-delay="0.2s">
-              <div class="project-grid" style="background-image: url(images/projects-4-518x373.jpg);">
-                <div class="inner"><img src="images/bg-pattern-transparent.png" alt=""/>
-                  <h5 class="title text-capitalize font-weight-medium"><a href="#">Hearst Business Center</a></h5>
-                  <p class="font-weight-regular exeption">We deliver reliable architectural solutions to our individual and corporate clients throughout the USA.</p><a class="button button-default" href="#">View</a>
-                </div>
-              </div>
-            </div>
-            <div class="col-sm-6 col-lg-4 wow fadeInRight" data-wow-delay="0.4s">
-              <div class="project-grid" style="background-image: url(images/projects-5-518x373.jpg);">
-                <div class="inner"><img src="images/bg-pattern-transparent.png" alt=""/>
-                  <h5 class="title text-capitalize font-weight-medium"><a href="#">Westwood Child Center</a></h5>
-                  <p class="font-weight-regular exeption">We deliver reliable architectural solutions to our individual and corporate clients throughout the USA.</p><a class="button button-default" href="#">View</a>
-                </div>
-              </div>
-            </div>
-            <div class="col-sm-6 col-lg-4 wow fadeInRight" data-wow-delay="0.6s">
-              <div class="project-grid" style="background-image: url(images/projects-6-518x373.jpg);">
-                <div class="inner"><img src="images/bg-pattern-transparent.png" alt=""/>
-                  <h5 class="title text-capitalize font-weight-medium"><a href="#">Modern Art Gallery</a></h5>
-                  <p class="font-weight-regular exeption">We deliver reliable architectural solutions to our individual and corporate clients throughout the USA.</p><a class="button button-default" href="#">View</a>
-                </div>
-              </div>
-            </div>
+          <?php endwhile; ?>
           </div>
-          <div class="button-wrap-1 text-center"><a class="button button-default" href="#">View All Projects</a></div>
+          
+          <div class="row row-custom-width row-30 row-xxl-100 row-flex">
+              <?php
+
+                    $dbc = mysqli_connect('localhost', 'root', '');
+                    mysqli_select_db($dbc, 'in_haus');
+
+                    $query = 'SELECT * FROM portfolio WHERE portfolio_id <= (SELECT MAX(portfolio_id) - 3 FROM portfolio) ORDER BY portfolio_id DESC LIMIT 3';
+
+                    if (!$r = mysqli_query($dbc, $query)) {
+                            echo '<p style="color:red;">Could not retrieve the data because: <br/>' . mysqli_error($dbc) . '</p><p>The query being run was: ' . $query . '</p>';
+                    }
+
+                    mysqli_close($dbc);
+
+            ?>
+          <?php while ($row = mysqli_fetch_array($r)): ?>
+            <div class="col-sm-6 col-lg-4 wow fadeInRight">
+              <div class="project-grid" style="background-image: url(<?php echo "../admin/assets/img/" . $row['portfolio_thumbnail']; ?>);">
+                <div class="inner">
+                  <h5 class="title text-capitalize font-weight-medium"><a href="#"><?php echo $row['portfolio_style']; ?></a></h5>
+                  <p class="font-weight-regular exeption"><?php echo $row['portfolio_description']; ?></p>
+                  <a class="button button-default" href="viewDetails.php?portfolio_id=<?php echo $row['portfolio_id']; ?>" class="details-link" target="_blank" >View</a>
+                </div>
+              </div>
+            </div>
+          <?php endwhile; ?>
+          </div>
+          <div class="button-wrap-1 text-center"><a class="button button-default" href="portfolio.php">View All Projects</a></div>
         </div>
       </section>
+      
       <!-- Branding-->
       <section class="section section-lg bg-gray-700 text-center text-sm-left">
         <div class="container">
@@ -176,25 +181,25 @@
                 <div class="col-sm-6 col-md-4">
                   <h5>Architecture</h5>
                   <ul class="list-xs font-weight-regular">
-                    <li><a class="link-item" href="">Planning & Development</a></li>
-                    <li><a class="link-item" href="">Project Management</a></li>
-                    <li><a class="link-item" href="">Structural Engineering</a></li>
+                    <li><a class="link-item" href="" style="pointer-events: none">Planning & Development</a></li>
+                    <li><a class="link-item" href="" style="pointer-events: none">Project Management</a></li>
+                    <li><a class="link-item" href="" style="pointer-events: none">Structural Engineering</a></li>
                   </ul>
                 </div>
                 <div class="col-sm-6 col-md-4">
                   <h5>3D Modeling</h5>
                   <ul class="list-xs font-weight-regular">
-                    <li><a class="link-item" href="#">Interior Rendering</a></li>
-                    <li><a class="link-item" href="#">Visualization</a></li>
-                    <li><a class="link-item" href="#">VR Architecture</a></li>
+                    <li><a class="link-item" href="" style="pointer-events: none">Interior Rendering</a></li>
+                    <li><a class="link-item" href="" style="pointer-events: none">Visualization</a></li>
+                    <li><a class="link-item" href="" style="pointer-events: none">VR Architecture</a></li>
                   </ul>
                 </div>
                 <div class="col-sm-6 col-md-4">
                   <h5>Design</h5>
                   <ul class="list-xs font-weight-regular">
-                    <li><a class="link-item" href="#">Interior Design</a></li>
-                    <li><a class="link-item" href="#">Architectural Design</a></li>
-                    <li><a class="link-item" href="#">Technical Detailing</a></li>
+                    <li><a class="link-item" href="" style="pointer-events: none">Interior Design</a></li>
+                    <li><a class="link-item" href="" style="pointer-events: none">Architectural Design</a></li>
+                    <li><a class="link-item" href="" style="pointer-events: none">Technical Detailing</a></li>
                   </ul>
                 </div>
                 <div class="col-sm-6 col-md-4">
@@ -226,7 +231,7 @@
             <div class="col-lg-3">
               <div class="heading-3">High-quality solutions</div>
               <div class="big text-white-lighter text-white-darken">We are committed to providing the best possible solutions at a competitive cost. Our team is ready to offer a wide range of various architectural services.</div>
-              <div class="img-wrap-1"><img src="images/speaker-1-180x80.png" alt="" width="180" height="80"/>
+              <div class="img-wrap-1"><img src="images/signature.png" alt="" width="180" height="80"/>
               </div>
             </div>
           </div>
@@ -301,6 +306,11 @@
                   <div class="quote-body">
                     <?php
                         if ($dbc = mysqli_connect('localhost','root','','in_haus')){
+
+                            $sql="SELECT comment FROM feedback WHERE feedback_id =1";
+                            $result = mysqli_query($dbc,$sql);
+                            while($row = mysqli_fetch_assoc($result)){
+                                echo "<q>{$row['comment']}</q>";
                             $sql="SELECT feedback_comment FROM feedback WHERE feedback_id =1";
                             $result = mysqli_query($dbc,$sql);
                             while($row = mysqli_fetch_assoc($result)){
@@ -313,6 +323,15 @@
                       <cite class="quote-minimal-cite">
                         <?php
                             if ($dbc = mysqli_connect('localhost','root','','in_haus')){
+                                $sql = "SELECT u.name as name "
+                                        . "FROM feedback f, user u "
+                                        . "WHERE u.user_id = f.cust_id "
+                                        . "AND f.feedback_id = 1 ";
+                                $result = mysqli_query($dbc,$sql);
+                                $row = mysqli_fetch_assoc($result);
+                                
+                                    echo "<q>{$row['name']}</q>";
+
                                 $sql = "SELECT c.cust_name "
                                         . " FROM project p, feedback f, customer c "
                                         . "WHERE f.project_id = p.project_id "
@@ -331,10 +350,15 @@
                   <div class="quote-body">
                     <?php
                         if ($dbc = mysqli_connect('localhost','root','','in_haus')){
+                            $sql="SELECT comment FROM feedback WHERE feedback_id =2";
+                            $result = mysqli_query($dbc,$sql);
+                            while($row = mysqli_fetch_assoc($result)){
+                                echo "<q>{$row['comment']}</q>";
                             $sql="SELECT feedback_comment FROM feedback WHERE feedback_id =2";
                             $result = mysqli_query($dbc,$sql);
                             while($row = mysqli_fetch_assoc($result)){
                                 echo "<q>{$row['feedback_comment']}</q>";
+
                             }
                         }
                     ?>
@@ -343,6 +367,15 @@
                       <cite class="quote-minimal-cite">
                         <?php
                             if ($dbc = mysqli_connect('localhost','root','','in_haus')){
+                                $sql = "SELECT u.name as name "
+                                        . "FROM feedback f, user u "
+                                        . "WHERE u.user_id = f.cust_id "
+                                        . "AND f.feedback_id = 2 ";
+                                $result = mysqli_query($dbc,$sql);
+                                $row = mysqli_fetch_assoc($result);
+                                
+                                    echo "<q>{$row['name']}</q>";
+  
                                 $sql = "SELECT c.cust_name "
                                         . " FROM project p, feedback f, customer c "
                                         . "WHERE f.project_id = p.project_id "
@@ -352,6 +385,7 @@
                                 while($row = mysqli_fetch_assoc($result)){
                                     echo "<q>{$row['cust_name']}</q>";
                                 }
+
                             }
                         ?>
                       </cite>
@@ -361,16 +395,94 @@
                   <div class="quote-body">
                     <?php
                         if ($dbc = mysqli_connect('localhost','root','','in_haus')){
-                            $sql="SELECT feedback_comment FROM feedback WHERE feedback_id =3";
+                            $sql="SELECT comment FROM feedback WHERE feedback_id =3";
                             $result = mysqli_query($dbc,$sql);
                             while($row = mysqli_fetch_assoc($result)){
-                                echo "<q>{$row['feedback_comment']}</q>";
+                                echo "<q>{$row['comment']}</q>";
+                            }
+                        }
+                    ?>
+                  </div>
+                 <div class="quote-footer">
+                      <cite class="quote-minimal-cite">
+                        <?php
+                            if ($dbc = mysqli_connect('localhost','root','','in_haus')){
+                                $sql = "SELECT u.name as name "
+                                        . "FROM feedback f, user u "
+                                        . "WHERE u.user_id = f.cust_id "
+                                        . "AND f.feedback_id = 3 ";
+                                $result = mysqli_query($dbc,$sql);
+                                $row = mysqli_fetch_assoc($result);
+                                
+                                    echo "<q>{$row['name']}</q>";
+                                
+                            }
+                        ?>
+                      </cite>
+                  </div>
+                </article>
+                <article class="quote-minimal">
+                  <div class="quote-body">
+                    <?php
+                        if ($dbc = mysqli_connect('localhost','root','','in_haus')){
+                            $sql="SELECT comment FROM feedback WHERE feedback_id =4";
+                            $result = mysqli_query($dbc,$sql);
+                            while($row = mysqli_fetch_assoc($result)){
+                                echo "<q>{$row['comment']}</q>";
                             }
                         }
                     ?>
                   </div>
                   <div class="quote-footer">
                       <cite class="quote-minimal-cite">
+                        <?php
+                            if ($dbc = mysqli_connect('localhost','root','','in_haus')){
+                                $sql = "SELECT u.name as name "
+                                        . "FROM feedback f, user u "
+                                        . "WHERE u.user_id = f.cust_id "
+                                        . "AND f.feedback_id = 4 ";
+                                $result = mysqli_query($dbc,$sql);
+                                $row = mysqli_fetch_assoc($result);
+                                
+                                    echo "<q>{$row['name']}</q>";
+                                
+                            }
+                        ?>
+                      </cite>
+                  </div>
+                </article>
+                  <article class="quote-minimal">
+                  <div class="quote-body">
+                    <?php
+                        if ($dbc = mysqli_connect('localhost','root','','in_haus')){
+                            $sql="SELECT comment FROM feedback WHERE feedback_id =5";
+                            $result = mysqli_query($dbc,$sql);
+                            while($row = mysqli_fetch_assoc($result)){
+                                echo "<q>{$row['comment']}</q>";
+
+                            $sql="SELECT feedback_comment FROM feedback WHERE feedback_id =3";
+                            $result = mysqli_query($dbc,$sql);
+                            while($row = mysqli_fetch_assoc($result)){
+                                echo "<q>{$row['feedback_comment']}</q>";
+
+                            }
+                        }
+                    ?>
+                  </div>
+                  <div class="quote-footer">
+                      <cite class="quote-minimal-cite">
+
+                        <?php
+                            if ($dbc = mysqli_connect('localhost','root','','in_haus')){
+                                $sql = "SELECT u.name as name "
+                                        . "FROM feedback f, user u "
+                                        . "WHERE u.user_id = f.cust_id "
+                                        . "AND f.feedback_id = 5 ";
+                                $result = mysqli_query($dbc,$sql);
+                                $row = mysqli_fetch_assoc($result);
+                                
+                                    echo "<q>{$row['name']}</q>";
+
                           <?php
                             if ($dbc = mysqli_connect('localhost','root','','in_haus')){
                                 $sql = "SELECT c.cust_name "
@@ -442,6 +554,7 @@
                                 while($row = mysqli_fetch_assoc($result)){
                                     echo "<q>{$row['cust_name']}</q>";
                                 }
+
                             }
                         ?>
                       </cite>
@@ -451,6 +564,15 @@
             </div>
             <div class="col-lg-6">
               <div class="box-border-wrap box-border-wrap-left">
+
+                <div class="row"><a class="col-6 col-md-4 box-border" href="https://www.underarmour.com.my/" target="_blank"><img src="images/brand-1.png" alt="" width="196" height="162"/></a>
+                    <a class="col-6 col-md-4 box-border" href="https://www.petloverscentre.com.my" target="_blank"><img src="images/brand-2.png" alt="" width="196" height="162"/></a>
+                    <a class="col-6 col-md-4 box-border" href="https://talentkraft.com" target="_blank"><img src="images/brand-3.png" alt="" width="196" height="162"/></a>
+                    <a class="col-6 col-md-4 box-border" href="https://www.oppo.com" target="_blank"><img src="images/brand-4.png" alt="" width="196" height="162"/></a>
+                    <a class="col-6 col-md-4 box-border" href="https://global.fujifilm.com" target="_blank"><img src="images/brand-5.png" alt="" width="196" height="162"/></a>
+                    <a class="col-6 col-md-4 box-border" href="https://mix.com.my" target="_blank"><img src="images/brand-6.png" alt="" width="196" height="162"/></a>
+                </div>
+
                 <div class="row"><a class="col-6 col-md-4 box-border" href="#">
                         <img src="images/brand-1.png" alt="" width="196" height="162"/></a>
                     <a class="col-6 col-md-4 box-border" href="#">
@@ -463,6 +585,7 @@
                         <img src="images/brand-5.png" alt="" width="196" height="162"/></a>
                     <a class="col-6 col-md-4 box-border" href="#">
                     <div class="icon icon-sm mdi mdi-arrow-right"></div></a></div>
+
               </div>
             </div>
           </div>
@@ -513,6 +636,22 @@
                     </div>
                   </div>
                 </div>
+                <div class="col-sm-6 wow fadeInLeft" data-wow-delay="0.2s">
+                  <div class="box-team box-team-right"><img src="images/staff5.jpg" alt="" width="390" height="332"/>
+                    <div class="meta">
+                      <div class="heading-6 title">Minnie</div>
+                      <p class="position">Interior Designer</p>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-sm-6 wow fadeInRight" data-wow-delay="0.2s">
+                  <div class="box-team box-team-right"><img src="images/staff6.jpg" alt="" width="390" height="332"/>
+                    <div class="meta">
+                      <div class="heading-6 title">Jackson</div>
+                      <p class="position">Interior Designer</p>
+                    </div>
+                  </div>
+                </div>  
               </div>
             </div>
             <div class="col-lg-5 col-xl-4">
@@ -542,10 +681,14 @@
           </div>
         </div>
       </section>
-      <!-- Page Footer-->
+      <!--       Page Footer-->
       <div class="pre-footer-classic bg-gray-700 context-dark">
         <div class="container">
           <div class="row row-30 justify-content-lg-between">
+              <div class="col-lg-4">
+              <div class="img-wrap-1"><img src="images/signature.png" alt="" width="300" height="100"/>
+              </div>
+            </div>
             <div class="col-sm-6 col-lg-3 col-xl-3">
               <h5>Location</h5>
               <ul class="list list-sm">
@@ -571,42 +714,26 @@
               </dl>
               <dl class="list-terms-custom">
                 <dt>Email.</dt>
-                <dd><a class="link-default" href="mailto:#">Info@demolink.org</a></dd>
+                <dd><a class="link-default" href="mailto:#">info@inhausinterior.com</a></dd>
               </dl>
               <ul class="list-inline list-inline-sm">
-                <li><a class="icon icon-sm icon-gray-filled icon-circle mdi mdi-facebook" href="#"></a></li>
-                <li><a class="icon icon-sm icon-gray-filled icon-circle mdi mdi-instagram" href="#"></a></li>
-                <li><a class="icon icon-sm icon-gray-filled icon-circle mdi mdi-behance" href="#"></a></li>
-                <li><a class="icon icon-sm icon-gray-filled icon-circle mdi mdi-twitter" href="#"></a></li>
+                <li><a class="icon icon-sm icon-gray-filled icon-circle mdi mdi-whatsapp" href="https://wa.link/l3cci2" target="_blank"></a></li>
+                <li><a class="icon icon-sm icon-gray-filled icon-circle mdi mdi-facebook" href="https://www.facebook.com/" target="_blank"></a></li>
+                <li><a class="icon icon-sm icon-gray-filled icon-circle mdi mdi-instagram" href="https://www.instagram.com/" target="_blank"></a></li>
               </ul>
             </div>
-            <div class="col-lg-4">
-              <h5>Newsletter</h5>
-              <form class="rd-form rd-mailform" data-form-output="form-output-global" data-form-type="contact" method="post" action="bat/rd-mailform.php">
-                <div class="form-wrap form-wrap-icon">
-                  <div class="form-icon mdi mdi-email-outline"></div>
-                  <input class="form-input" id="footer-email" type="email" name="email" data-constraints="@Email @Required">
-                  <label class="form-label" for="footer-email">E-mail</label>
-                </div>
-                <div class="button-wrap">
-                  <button class="button button-default button-invariable" type="submit">Subscribe</button>
-                </div>
-              </form>
-            </div>
+            
           </div>
         </div>
       </div>
       <footer class="section footer-classic context-dark text-center">
         <div class="container">
           <div class="row row-15 justify-content-lg-between">
-            <div class="col-lg-4 col-xl-3 text-lg-left">
-              <p class="rights"><span>&copy;&nbsp;</span><span class="copyright-year"></span>. All Rights Reserved. Design by <a href="https://www.templatemonster.com">TemplateMonster</a></p>
-            </div>
             <div class="col-lg-5 col-xl-6">
               <ul class="list-inline list-inline-lg text-uppercase">
-                <li><a href="about-us.html">About us</a></li>
-                <li><a href="#">Our Portfolio</a></li>
-                <li><a href="#">Blog</a></li>
+                <li><a href="about-us.php">About us</a></li>
+                <li><a href="portfolio.php">Our Portfolio</a></li>
+                <li><a href="faq.php">FAQ</a></li>
               </ul>
             </div>
           </div>

@@ -380,6 +380,14 @@
           </div>
         </div>
       </section>
+      <!--       Page Footer-->
+      <div class="pre-footer-classic bg-gray-700 context-dark">
+        <div class="container">
+          <div class="row row-30 justify-content-lg-between">
+              <div class="col-lg-4">
+              <div class="img-wrap-1"><img src="images/signature.png" alt="" width="300" height="100"/>
+              </div>
+            </div>
       <!-- Page Footer-->
       <div class="pre-footer-classic bg-gray-700 context-dark">
           <br><br>
@@ -410,6 +418,8 @@
               </dl>
               <dl class="list-terms-custom">
                 <dt>Email.</dt>
+                <dd><a class="link-default" href="mailto:#">info@inhausinterior.com</a></dd>
+
                 <dd><a class="link-default" href="mailto:#">Info@demolink.org</a></dd>
               </dl>
               <ul class="list-inline list-inline-sm">
@@ -442,7 +452,9 @@
                 <li><a href="about-us.php">About us</a></li>
                 <li><a href="portfolio.php">Our Portfolio</a></li>
                 <li><a href="faq.php">FAQ</a></li>
+
                 <li><a href="tnc.php">Terms & Conditions</a></li>
+
               </ul>
             </div>
           </div>
