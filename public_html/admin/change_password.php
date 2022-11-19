@@ -1,25 +1,62 @@
 <?php
 
+    $page = "change_password";
+    $pwInvalid = $pwChanged = false;
+
+    session_start();
+
+    $dbc = mysqli_connect('localhost', 'root', '');
+    mysqli_select_db($dbc, 'in_haus');
+
+    if (isset($_POST['info'])) {
+      $id = $_POST['id'];
+      $email = $_POST['email'];
+    }
+
     if (isset($_POST['submitted'])) {
-        $admin_password = $_POST['password'];
+        $id = $_POST['id'];
+        $email = $_POST['email'];
+        $password = $_POST['password'];
+        $confirm_password = $_POST['confirm_password'];
 
-        // update database
-        $query = "UPDATE admin SET 
-            admin_password = '$admin_password'
-            WHERE admin_email = '$admin_email'";
+        if ($password != $confirm_password) {
+          $pwInvalid = true;
+        }
+        else {
+          $password = md5($_POST['password']);
+          // update database
+          $query = "UPDATE user SET 
+                  password = '$password' 
+                  WHERE email = '$email' 
+                  AND access_level != 'Normal User'";
 
-        if (mysqli_query($dbc, $query)) {
-            header("Location: login.php");
+          if (mysqli_query($dbc, $query)) {
+            $pwChanged = true;
+
+            if ($_SESSION['admin_position'] == "Project Manager") {
+              $alert_msg = "Password has been changed successfully.";
+              $url = "staff.php?admin_id=" . $id;
+            }
+            else {
+              $alert_msg = "Password has been changed successfully. Please login again.";
+              $url = "login.php";
+            }
+          }
         }
     }
+
+    if (empty($id) && empty($email)) {
+      header("Location: staffs.php");
+    }
+
+    mysqli_close($dbc);
 
 ?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta content="width=device-width, initial-scale=1, maximum-scale=1, shrink-to-fit=no" name="viewport">
-  <title>Reset Password &mdash; Stisla</title>
+ 
+  <?php include("head.php"); ?>
 
   <!-- General CSS Files -->
   <link rel="stylesheet" href="assets/modules/bootstrap/css/bootstrap.min.css">
@@ -30,6 +67,9 @@
   <!-- Template CSS -->
   <link rel="stylesheet" href="assets/css/style.css">
   <link rel="stylesheet" href="assets/css/components.css">
+
+  
+  <script src="assets/modules/sweetalert/sweetalert.min.js"></script>
 <!-- Start GA -->
 <script async src="https://www.googletagmanager.com/gtag/js?id=UA-94034622-3"></script>
 <script>
@@ -42,6 +82,19 @@
 <!-- /END GA --></head>
 
 <body>
+  <?php 
+    if ($pwChanged) {
+      echo '<script type="text/javascript">
+        swal(
+          "Successful", 
+          "'.$alert_msg.'", 
+          "success"
+        ).then(function() {
+            window.location = "'.$url.'";
+        });
+      </script>';
+    }
+  ?>
   <div id="app">
     <section class="section">
       <div class="container mt-5">
@@ -57,14 +110,12 @@
               <div class="card-body">
                 <!-- <p class="text-muted">We will send a link to reset your password</p> -->
                 <form action="change_password.php" method="POST">
-                  <div class="form-group">
-                    <label for="email">Email</label>
-                    <input id="email" type="email" class="form-control" name="email" tabindex="1" required autofocus>
-                  </div>
+                  <input type="hidden" name="id" value="<?php echo $id; ?>">
+                  <input type="hidden" name="email" value="<?php echo $email; ?>">
 
                   <div class="form-group">
                     <label for="password">New Password</label>
-                    <input id="password" type="password" class="form-control pwstrength" data-indicator="pwindicator" name="password" tabindex="2" required>
+                    <input type="password" class="form-control pwstrength" data-indicator="pwindicator" name="password" required>
                     <div id="pwindicator" class="pwindicator">
                       <div class="bar"></div>
                       <div class="label"></div>
@@ -73,7 +124,12 @@
 
                   <div class="form-group">
                     <label for="password-confirm">Confirm Password</label>
-                    <input id="password-confirm" type="password" class="form-control" name="confirm_password" tabindex="2" required>
+                    <div>
+                      <input type="password" class="form-control <?php if ($pwInvalid) echo "is-invalid"; ?>" name="confirm_password" required>
+                      <div class="invalid-feedback">
+                        Password not match.
+                      </div>
+                    </div>
                   </div>
 
                   <div class="form-group">
