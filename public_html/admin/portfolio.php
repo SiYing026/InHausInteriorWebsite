@@ -205,9 +205,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-	<meta charset="UTF-8">
-	<meta content="width=device-width, initial-scale=1, maximum-scale=1, shrink-to-fit=no" name="viewport">
-	<title>Bootstrap Components &rsaquo; Form &mdash; Stisla</title>
+	<?php include("head.php"); ?>
 
 	<!-- General CSS Files -->
 	<link rel="stylesheet" href="assets/modules/bootstrap/css/bootstrap.min.css">
@@ -370,7 +368,7 @@
 								<div class="text-danger pt-3"><?php echo $thumbnailErr; ?></div>
 							</div>
 						</div>
-						<div class="form-group row">
+						<div class="form-group row pt-3">
 							<label class="col-sm-3 col-form-label">Panorama</label>
 							<?php if (!empty($portfolio_id)): ?>
 							<div class="col-sm-3">
@@ -385,7 +383,7 @@
 								<div class="text-danger pt-3"><?php echo $panoramaErr; ?></div>
 							</div>
 						</div>
-						<div class="form-group row">
+						<div class="form-group row pt-3">
 							<label class="col-sm-3 col-form-label">Images</label>
 							<?php if (!empty($portfolio_id)): ?>
 							<div class="col-sm-9">
