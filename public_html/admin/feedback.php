@@ -1,13 +1,41 @@
 <?php
   $page = "feedbacks";
   session_start();
+
+  $dbc = mysqli_connect('localhost', 'root', '');
+	mysqli_select_db($dbc, 'in_haus');
+
+  if (!empty($_GET['feedback_id'])) {
+		$feedback_id = $_GET['feedback_id'];
+		$url = "feedback.php?feedback_id=" . $feedback_id;
+
+		$query = 'SELECT f.*, p.admin_id, u.* FROM feedback f, project p, user u 
+              WHERE f.project_id = p.project_id 
+              AND f.cust_id = u.user_id 
+              AND feedback_id = ' . $feedback_id;
+		
+		if ($result = mysqli_query($dbc, $query)) {
+			$feedback = mysqli_fetch_assoc($result);
+      $admin_id = $feedback['admin_id'];
+		}
+		else {
+			$fail_alert = '<p style="color:red;">Could not retrieve the data because: <br/>' . mysqli_error($dbc) . '</p><p>The query being run was: ' . $query . '</p>';
+		}
+
+    if ($_SESSION['admin_position'] != "Project Manager" && $admin_id != $_SESSION['admin_id'])
+      header("Location: error_403.php");
+	}
+	else {
+		header("Location: error_404.php");
+	}
+
+  mysqli_close($dbc);
+
 ?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta content="width=device-width, initial-scale=1, maximum-scale=1, shrink-to-fit=no" name="viewport">
-  <title>Bootstrap Components &rsaquo; Form &mdash; Stisla</title>
+  <?php include("head.php"); ?>
 
   <!-- General CSS Files -->
   <link rel="stylesheet" href="assets/modules/bootstrap/css/bootstrap.min.css">
@@ -44,41 +72,121 @@
           </div>
 
           <div class="section-body">
-
+            <div class="card">
+              <div class="card-header" style="min-height:0px;">
+                <a href="feedbacks.php" class="btn btn-icon icon-left btn-danger"><i class="fas fa-times"></i> Close</a>
+              </div>
+            </div>
+          
             <div class="row">
               <div class="col-12 col-md-6 col-lg-6">
                 <div class="card">
+                  <div class="card-header">
+                    <h4>Feedback Information</h4>
+                  </div>
+                  <div class="card-body">
+                    <div class="form-group row">
+                      <label class="col-sm-3 col-form-label">ID</label>
+                      <div class="col-sm-9">
+                        <input type="text" class="form-control" value="<?php echo $feedback['feedback_id'];?>" disabled>
+                      </div>
+                    </div>
+                    <div class="form-group row">
+                      <label class="col-sm-3 col-form-label">Date</label>
+                      <div class="col-sm-9">
+                        <input type="text" class="form-control" value="<?php echo $feedback['feedback_date'];?>" disabled>
+                      </div>
+                    </div>
+                    <div class="form-group row">
+                      <label class="col-sm-3 col-form-label">Project ID</label>
+                      <div class="col-sm-9">
+                        <a href="project.php?project_id=<?php echo $feedback['project_id']; ?>" target="_blank"><?php echo $feedback['project_id']; ?></a>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="card">
                     <div class="card-header">
-                        <button class="btn btn-icon icon-left btn-primary mr-2"><i class="fas fa-check"></i> Save Changes</button> 
-                        <a href="feedbacks.php" class="btn btn-icon icon-left btn-danger"><i class="fas fa-times"></i> Close</a>
+                      <h4>Customer Details</h4>
                     </div>
                     <div class="card-body">
                       <div class="form-group row">
-                        <label class="col-sm-3 col-form-label">ID</label>
+                        <label class="col-sm-3 col-form-label">Customer Name</label>
                         <div class="col-sm-9">
-                          <input type="text" class="form-control" value="2" disabled>
+                          <input type="text" class="form-control" value="<?php echo $feedback['name']; ?>" disabled>
                         </div>
                       </div>
                       <div class="form-group row">
-                        <label class="col-sm-3 col-form-label">Datetime</label>
+                        <label class="col-sm-3 col-form-label">Customer E-mail</label>
                         <div class="col-sm-9">
-                          <input type="text" class="form-control" value="1 Oct 2022, 9.42 pm" disabled>
+                          <input type="email" class="form-control" value="<?php echo $feedback['email']; ?>" disabled>
                         </div>
                       </div>
                       <div class="form-group row">
-                        <label class="col-sm-3 col-form-label">Comment</label>
+                        <label class="col-sm-3 col-form-label">Customer Contact</label>
                         <div class="col-sm-9">
-                            <textarea class="form-control" name="" cols="30" rows="10" disabled>Lorem ipsum dolor sit amet consectetur adipisicing elit. Laborum rem ducimus facilis quae sapiente ut aliquid, dolore debitis consequuntur laboriosam libero iste dignissimos cupiditate reprehenderit quis modi! Ut, enim ad?</textarea>
-                        </div>
-                      </div>
-                      <div class="form-group row">
-                        <label class="col-sm-3 col-form-label">Project ID</label>
-                        <div class="col-sm-9">
-                          <a href="project.php">3</a>
+                          <input type="number" class="form-control" value="<?php echo $feedback['phone_no']; ?>" disabled>
                         </div>
                       </div>
                     </div>
                   </div>
+              </div>
+              <div class="col-12 col-md-6 col-lg-6">
+                <div class="card">
+                  <div class="card-header">
+                    <h4>Feedback Details</h4>
+                  </div>
+                  <div class="card-body">
+                    <div class="form-group row">
+                      <label class="col-sm-3 col-form-label">Expectation</label>
+                      <div class="col-sm-9">
+                        <input type="text" class="form-control" value="<?php echo $feedback['expectation'];?>" disabled>
+                      </div>
+                    </div>
+                    <div class="form-group row">
+                      <label class="col-sm-3 col-form-label">Work Again</label>
+                      <div class="col-sm-9">
+                        <input type="text" class="form-control" value="<?php echo $feedback['workAgn'];?>" disabled>
+                      </div>
+                    </div>
+                    <div class="form-group row">
+                      <label class="col-sm-3 col-form-label">Comparison</label>
+                      <div class="col-sm-9">
+                        <input type="text" class="form-control" value="<?php echo $feedback['compare'];?>" disabled>
+                      </div>
+                    </div>
+                    <div class="form-group row">
+                      <label class="col-sm-3 col-form-label">Communication</label>
+                      <div class="col-sm-9">
+                        <input type="text" class="form-control" value="<?php echo $feedback['communication'];?>" disabled>
+                      </div>
+                    </div>
+                    <div class="form-group row">
+                      <label class="col-sm-3 col-form-label">Explanation</label>
+                      <div class="col-sm-9">
+                        <input type="text" class="form-control" value="<?php echo $feedback['explanation'];?>" disabled>
+                      </div>
+                    </div>
+                    <div class="form-group row">
+                      <label class="col-sm-3 col-form-label">Goal</label>
+                      <div class="col-sm-9">
+                        <input type="text" class="form-control" value="<?php echo $feedback['goal'];?>" disabled>
+                      </div>
+                    </div>
+                    <div class="form-group row">
+                      <label class="col-sm-3 col-form-label">Comment</label>
+                      <div class="col-sm-9">
+                        <textarea class="form-control" name="project_remark" cols="30" rows="10" disabled><?php echo $feedback['comment'];?></textarea>
+                      </div>
+                    </div>
+                    <div class="form-group row">
+                      <label class="col-sm-3 col-form-label">Additional Comment</label>
+                      <div class="col-sm-9">
+                        <textarea class="form-control" name="project_remark" cols="30" rows="10" disabled><?php echo $feedback['comment2'];?></textarea>
+                      </div>
+                    </div>
+                  </div>
+                </div>
               </div>
             </div>
           </div>

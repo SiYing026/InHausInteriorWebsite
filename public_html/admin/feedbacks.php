@@ -1,13 +1,30 @@
 <?php
   $page = "feedbacks";
   session_start();
+
+  $dbc = mysqli_connect('localhost', 'root', '');
+	mysqli_select_db($dbc, 'in_haus');
+
+  if ($_SESSION['admin_position'] == "Project Manager") {
+    $query = "SELECT f.*, u.name FROM feedback f, user u 
+              WHERE f.cust_id = u.user_id";
+  }
+  else {
+    $query = "SELECT f.*, u.name FROM feedback f, user u, project p 
+              WHERE f.cust_id = u.user_id 
+              AND f.project_id = p.project_id 
+              AND p.admin_id = " . $_SESSION['admin_id'];
+  }
+
+  $feedbacks = mysqli_query($dbc, $query);
+
+  mysqli_close($dbc);
+
 ?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta content="width=device-width, initial-scale=1, maximum-scale=1, shrink-to-fit=no" name="viewport">
-  <title>Consultations &mdash; In Haus</title>
+  <?php include("head.php"); ?>
 
   <!-- General CSS Files -->
   <link rel="stylesheet" href="assets/modules/bootstrap/css/bootstrap.min.css">
@@ -55,36 +72,36 @@
                           <thead>                                 
                             <tr>
                                 <th>#</th>
-                                <th>Datetime</th>
-                                <th width="70%">Comment</th>
+                                <th>Date</th>
+                                <th>Expectation</th>
+                                <th>Work Again</th>
+                                <th>Comparison</th>
+                                <th>Communication</th>
+                                <th>Explanation</th>
+                                <th>Goal</th>
+                                <th>Comment</th>
+                                <th>Additional Comment</th>
                                 <th>Project ID</th>
+                                <th>Customer ID</th>
                             </tr>
                           </thead>
                           <tbody>  
+                            <?php while ($feedback = mysqli_fetch_array($feedbacks)): ?>
                             <tr>                              
-                                <td><a href="feedback.php">1</a></td>
-                                <td>29 Sep 2022, 3.19 pm</td>
-                                <td>Lorem ipsum, dolor sit amet consectetur adipisicing elit. Alias, placeat? Quibusdam impedit non inventore! Et ducimus officia sed aliquam necessitatibus debitis odio vitae maiores ipsa omnis laudantium, accusamus, architecto nobis!</td>
-                                <td><a href="project.php">6</a></td>
-                            </tr> 
-                            <tr>                              
-                              <td><a href="feedback.php">2</a></td>
-                                <td>1 Oct 2022, 9.42 pm</td>
-                                <td>Lorem ipsum, dolor sit amet consectetur adipisicing elit. Alias, placeat? Quibusdam impedit non inventore! Et ducimus officia sed aliquam necessitatibus debitis odio vitae maiores ipsa omnis laudantium, accusamus, architecto nobis!</td>
-                                <td><a href="project.php">8</a></td>
-                            </tr> 
-                            <tr>                              
-                              <td><a href="feedback.php">3</a></td>
-                                <td>1 Oct 2022, 11.25 pm</td>
-                                <td>Lorem ipsum, dolor sit amet consectetur adipisicing elit. Alias, placeat? Quibusdam impedit non inventore! Et ducimus officia sed aliquam necessitatibus debitis odio vitae maiores ipsa omnis laudantium, accusamus, architecto nobis!</td>
-                                <td><a href="project.php">10</a></td>
-                            </tr> 
-                            <tr>                              
-                              <td><a href="feedback.php">4</a></td>
-                                <td>2 Oct 2022, 2.31 pm</td>
-                                <td>Lorem ipsum, dolor sit amet consectetur adipisicing elit. Alias, placeat? Quibusdam impedit non inventore! Et ducimus officia sed aliquam necessitatibus debitis odio vitae maiores ipsa omnis laudantium, accusamus, architecto nobis!</td>
-                                <td><a href="project.php">5</a></td>
-                            </tr> 
+                                <td><a href="feedback.php?feedback_id=<?php echo $feedback['feedback_id']; ?>"><?php echo $feedback['feedback_id']; ?></a></td>
+                                <td><?php echo $feedback['feedback_date']; ?></td>
+                                <td><?php echo $feedback['expectation']; ?></td>
+                                <td><?php echo $feedback['workAgn']; ?></td>
+                                <td><?php echo $feedback['compare']; ?></td>
+                                <td><?php echo $feedback['communication']; ?></td>
+                                <td><?php echo $feedback['explanation']; ?></td>
+                                <td><?php echo $feedback['goal']; ?></td>
+                                <td><?php echo $feedback['comment']; ?></td>
+                                <td><?php echo $feedback['comment2']; ?></td>
+                                <td><a href="project.php?project_id=<?php echo $feedback['project_id']; ?>" target="_blank"><?php echo $feedback['project_id']; ?></a></td>
+                                <td><?php echo $feedback['name']; ?></td>
+                            </tr>
+                            <?php endwhile; ?>
                           </tbody>
                         </table>
                       </div>
