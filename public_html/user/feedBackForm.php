@@ -1,3 +1,14 @@
+<?php
+
+  if (!empty($_GET['cust_id']) && !empty($_GET['project_id'])) {
+    $cust_id = $_GET['cust_id'];
+    $project_id = $_GET['project_id'];
+  }
+  else {
+    die();  
+  }
+
+?>
 
 <!-- Price box minimal--><!DOCTYPE html>
 <html class="wide wow-animation" lang="en">
@@ -45,7 +56,7 @@
         </div>
         <p>Loading...</p>
       </div>
-    </div><a class="banner banner-top" href="https://www.templatemonster.com/website-templates/monstroid2.html" target="_blank"><img src="images/monstroid-2.jpg" alt="" height="0"></a>
+    </div>
     <div class="page">
       <!-- Page Header-->
       <header class="section page-header">
@@ -59,22 +70,10 @@
                   <!-- RD Navbar Toggle-->
                   <button class="rd-navbar-toggle" data-rd-navbar-toggle=".rd-navbar-nav-wrap"><span></span></button>
                   <!-- RD Navbar Brand-->
-                  <div class="rd-navbar-brand"><a class="brand" href="index.html"><img class="brand-logo-dark" src="images/logo-default-465x134.png" alt="" width="232" height="67"/><img class="brand-logo-light" src="images/logo-inverse-86x104.png" alt="" width="86" height="104"/></a>
+                  <div class="rd-navbar-brand"><a class="brand" href="index.php"><img class="brand-logo-dark" src="images/logo.jpeg" alt="" width="232" height="67"/><img class="brand-logo-light" src="images/logo.PNG" alt="" width="86" height="104"/></a>
                   </div>
                 </div>
-                <div class="rd-navbar-nav-wrap">
-                  <!-- RD Navbar Nav-->
-                  <ul class="rd-navbar-nav">
-                    <li class="rd-nav-item"><a class="rd-nav-link" href="index.html">Home</a>
-                    </li>
-                    <li class="rd-nav-item"><a class="rd-nav-link" href="about-us.html">About</a>
-                    </li>
-                    <li class="rd-nav-item"><a class="rd-nav-link" href="typography.html">Typography</a>
-                    </li>
-                    <li class="rd-nav-item active"><a class="rd-nav-link" href="contacts.html">Contacts</a>
-                    </li>
-                  </ul>
-                </div>
+                
               </div>
             </div>
           </nav>
@@ -92,8 +91,9 @@
           <form class="rd-form rd-mailform form-boxed" data-form-output="form-output-global" data-form-type="contact" method="post" action="submitFeedback.php">
            
             <div class="row row-50">
-
                 <div class="col-lg-7">
+                  <input type="hidden" name="cust_id" value="<?php echo $cust_id ;?>">
+                  <input type="hidden" name="project_id" value="<?php echo $project_id ;?>">
                   <p>Did InHaus meet your overall expectations? *</p>
                   <div class="form-check">
                     <input type="radio" class="form-check-input" id="ExceededExpectations" name="expectation" value="Exceeded Expectations" />

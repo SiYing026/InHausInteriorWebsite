@@ -1,7 +1,7 @@
 <?php 
   session_start();
   if(isset($_SESSION['user_id'])){
-    header("location: index.html");
+    header("location: index.php");
   }
 ?>
 
@@ -31,7 +31,7 @@
   </div>
   
   <script src="javascript/pass-show-hide.js"></script>
-  <script src="javascript/login2.js"></script>
+  <script src="javascript/login.js"></script>
 
   </div>
 </body>

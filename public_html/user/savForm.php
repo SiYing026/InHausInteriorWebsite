@@ -71,7 +71,7 @@ if(!isset($_SESSION['user_id'])){
             
     $queryInsert = mysqli_query($conn, "INSERT INTO consultation(consultation_id, created_datetime, 
         consultation_date, consultation_time, consultation_type, preferred_style, design_range, 
-         consultation_remark, user_id)
+         consultation_remark, cust_id)
                         VALUES (0, '$currentdate', '$date', '$time', '$type',' $course','$area','$comment','$custID')");
             
        
@@ -82,7 +82,7 @@ if(!isset($_SESSION['user_id'])){
             echo '</svg>';
             echo '<div class="title"><span>S</span><span>u</span><span>c</span><span>c</span><span>e</span><span>s</span><span>s</span>';
             echo '<br><p style="font-size:2vw">Successfully place an appointment! please click the link below back to homepage</p>';
-            echo '<a href="index.html" style="font-size:2vw">Home Page </a>';
+            echo '<a href="index.php" style="font-size:2vw">Home Page </a>';
             echo '</div>';
               
             echo '</div>';

@@ -1,7 +1,27 @@
+<!-- Price box minimal--><!DOCTYPE html>
+<html class="wide wow-animation" lang="en">
+  <head>
+    <title>Save Form</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, height=device-height, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <link rel="icon" href="images/favicon.ico" type="image/x-icon">
+    <link rel="stylesheet" type="text/css" href="//fonts.googleapis.com/css?family=Poppins:300,400,500,600,700,900%7CRoboto:300,300i,400,400i,500,500i,700,700i,900,900i">
+    <link rel="stylesheet" href="css/bootstrap.css">
+    <link rel="stylesheet" href="css/fonts.css">
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/js.css">
+
+    <svg xmlns="http://www.w3.org/2000/svg" style="display: none">
+      <defs>
+        <symbol id="check" viewBox="0 0 16 16">
+          <path fill="currentColor" d="M8,0C3.6,0,0,3.6,0,8s3.6,8,8,8s8-3.6,8-8S12.4,0,8,0z M7,11.4L3.6,8L5,6.6l2,2l4-4L12.4,6L7,11.4z"></path>
+        </symbol>
+      </defs>
+    </svg>
 
 <?php
 include_once "php/config.php";
-echo '<link rel="stylesheet" href="css/js.css">';
 
     if(!empty($_POST['expectation']) &&
     !empty($_POST['workAgn']) &&
@@ -13,7 +33,7 @@ echo '<link rel="stylesheet" href="css/js.css">';
     !empty($_POST['comment2']) ){
         
     
-    $cust_id = 1;
+    $cust_id = $_POST['cust_id'];
     $expectation = $_POST['expectation'];
     $workAgn = $_POST['workAgn'];
     $compare = $_POST['compare'];
@@ -24,7 +44,7 @@ echo '<link rel="stylesheet" href="css/js.css">';
     $comment2 = $_POST['comment2'];
     $currentDate = date("d-m-y");
 
-    $project_id = 1;
+    $project_id = $_POST['project_id'];
 
 
 $queryInsert = mysqli_query($conn, "INSERT INTO feedback(feedback_id, feedback_date, project_id, cust_id, expectation, workAgn, compare, communication, explanation, goal, comment, comment2)
@@ -53,8 +73,8 @@ echo '</div>';
 echo "Please fill in all the information in the form! ";
 }
 
-mysqli_close($dbc);
-
-
-
+mysqli_close($conn);
 ?>
+
+</body>
+</html>

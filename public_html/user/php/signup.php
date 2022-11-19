@@ -5,19 +5,17 @@
     $email = mysqli_real_escape_string($conn, $_POST['email']);
     $password = mysqli_real_escape_string($conn, $_POST['password']);
     $phoneNo = mysqli_real_escape_string($conn, $_POST['phoneNo']);
-    $access_lvl = "Customer Service";//Normal User//
+    $access_lvl = "Normal User";
     if(!empty($name) && !empty($email) && !empty($password) && !empty($phoneNo)){
         if(filter_var($email, FILTER_VALIDATE_EMAIL)){
             $sql = mysqli_query($conn, "SELECT * FROM user WHERE email = '{$email}'");
             if(mysqli_num_rows($sql) > 0){
                 echo "$email - This email already exist!";
             }else{
-               
-                        $ran_id = rand(time(), 100000000);
                         $status = "Active now";
                         $encrypt_pass = md5($password);
                         $insert_query = mysqli_query($conn, "INSERT INTO user (user_id, name, email, password, phone_no, access_level, status)
-                        VALUES ({$ran_id}, '{$name}', '{$email}', '{$encrypt_pass}', '{$phoneNo}', '{$access_lvl}', '{$status}')");
+                        VALUES (0, '{$name}', '{$email}', '{$encrypt_pass}', '{$phoneNo}', '{$access_lvl}', '{$status}')");
                         if($insert_query){
                             $select_sql2 = mysqli_query($conn, "SELECT * FROM user WHERE email = '{$email}'");
                             if(mysqli_num_rows($select_sql2) > 0){
