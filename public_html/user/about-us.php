@@ -388,11 +388,6 @@
               <div class="img-wrap-1"><img src="images/signature.png" alt="" width="300" height="100"/>
               </div>
             </div>
-      <!-- Page Footer-->
-      <div class="pre-footer-classic bg-gray-700 context-dark">
-          <br><br>
-        <div class="container">
-          <div class="row row-30 justify-content-lg-between">
             <div class="col-sm-6 col-lg-3 col-xl-3">
               <h5>Location</h5>
               <ul class="list list-sm">
@@ -419,8 +414,6 @@
               <dl class="list-terms-custom">
                 <dt>Email.</dt>
                 <dd><a class="link-default" href="mailto:#">info@inhausinterior.com</a></dd>
-
-                <dd><a class="link-default" href="mailto:#">Info@demolink.org</a></dd>
               </dl>
               <ul class="list-inline list-inline-sm">
                 <li><a class="icon icon-sm icon-gray-filled icon-circle mdi mdi-whatsapp" href="https://wa.link/l3cci2" target="_blank"></a></li>
@@ -428,19 +421,7 @@
                 <li><a class="icon icon-sm icon-gray-filled icon-circle mdi mdi-instagram" href="https://www.instagram.com/" target="_blank"></a></li>
               </ul>
             </div>
-            <div class="col-lg-4">
-              <h5>Newsletter</h5>
-              <form class="rd-form rd-mailform" data-form-output="form-output-global" data-form-type="contact" method="post" action="bat/rd-mailform.php">
-                <div class="form-wrap form-wrap-icon">
-                  <div class="form-icon mdi mdi-email-outline"></div>
-                  <input class="form-input" id="footer-email" type="email" name="email" data-constraints="@Email @Required">
-                  <label class="form-label" for="footer-email">E-mail</label>
-                </div>
-                <div class="button-wrap">
-                  <button class="button button-default button-invariable" type="submit">Subscribe</button>
-                </div>
-              </form>
-            </div>
+            
           </div>
         </div>
       </div>
@@ -452,9 +433,6 @@
                 <li><a href="about-us.php">About us</a></li>
                 <li><a href="portfolio.php">Our Portfolio</a></li>
                 <li><a href="faq.php">FAQ</a></li>
-
-                <li><a href="tnc.php">Terms & Conditions</a></li>
-
               </ul>
             </div>
           </div>
