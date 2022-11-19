@@ -37,7 +37,7 @@
         }
       }
       else if ($type == "feedback") {
-        $datetime = (!empty($row['feedback_datetime'])) ? $row['feedback_datetime'] : "";
+        $datetime = (!empty($row['feedback_date'])) ? $row['feedback_date'] : "";
       }
 
       $activity = array(
@@ -49,7 +49,7 @@
         "cust_name" => (!empty($row['cust_name'])) ? $row['cust_name'] : "",
         "action" => $action,
         "type" => $type,
-        "consultation_datetime" => (!empty($row['consultation_datetime'])) ? $row['consultation_datetime'] : "",
+        "consultation_datetime" => (!empty($row['consultation_date']) && !empty($row['consultation_time'])) ? date("d M Y", strtotime($row['consultation_date'])) . ", " . date("g:i a", strtotime($row['consultation_time'])) : "",
         "payment_status" => $payment_status
       );
       $activities[$datetime] = $activity;
@@ -65,7 +65,7 @@
           "cust_name" => (!empty($row['cust_name'])) ? $row['cust_name'] : "",
           "action" => "create",
           "type" => $type,
-          "consultation_datetime" => (!empty($row['consultation_datetime'])) ? $row['consultation_datetime'] : "",
+          "consultation_datetime" => (!empty($row['consultation_date']) && !empty($row['consultation_time'])) ? date("d M Y", strtotime($row['consultation_date'])) . ", " . date("g:i a", strtotime($row['consultation_time'])) : "",
           "payment_status" => $payment_status
         );
       }
@@ -101,6 +101,8 @@
   }
 
   $page = "recent_activities";
+  $managerAccessOnly = true;
+
   session_start();
   date_default_timezone_set("Asia/Kuala_Lumpur");
 
@@ -110,38 +112,41 @@
 	mysqli_select_db($dbc, 'in_haus');
 
   // select from consultation table
-	$query = 'SELECT c.consultation_id, c.created_datetime, c.last_modified_datetime, c.consultation_datetime, cust.cust_name, a.admin_name 
-            FROM consultation c, customer cust, admin a 
-            WHERE c.cust_id = cust.cust_id 
-            AND c.admin_id = a.admin_id';
+	$query = 'SELECT c.consultation_id, c.created_datetime, c.last_modified_datetime, c.consultation_date, c.consultation_time, 
+            uc.name as cust_name, ua.name as admin_name 
+            FROM consultation c, user ua, user uc 
+            WHERE c.cust_id = uc.user_id 
+            AND c.admin_id = ua.user_id';
 	if (!$r = mysqli_query($dbc, $query)) {
 		echo '<p style="color:red;">Could not retrieve the data because: <br/>' . mysqli_error($dbc) . '</p><p>The query being run was: ' . $query . '</p>';
 	}
   $activities = getActivitiesArray($activities, "consultation", $r);
 
   // select from project table
-  $query = 'SELECT p.project_id, p.project_name, p.created_datetime, p.last_modified_datetime, a.admin_name 
-            FROM project p, admin a 
-            WHERE p.admin_id = a.admin_id';
+  $query = 'SELECT p.project_id, p.project_name, p.created_datetime, p.last_modified_datetime, 
+            u.name as admin_name
+            FROM project p, user u 
+            WHERE p.admin_id = u.user_id';
 	if (!$r = mysqli_query($dbc, $query)) {
 		echo '<p style="color:red;">Could not retrieve the data because: <br/>' . mysqli_error($dbc) . '</p><p>The query being run was: ' . $query . '</p>';
 	}
   $activities = getActivitiesArray($activities, "project", $r);
 
-  // select from payment table
-  $query = 'SELECT p.project_id, p.project_name, p.payment_datetime, c.cust_name 
-            FROM project p, customer c 
-            WHERE p.cust_id = c.cust_id';
+  // select payment from project table
+  $query = 'SELECT p.project_id, p.project_name, p.payment_datetime, 
+            u.name as cust_name 
+            FROM project p, user u 
+            WHERE p.cust_id = u.user_id';
 	if (!$r = mysqli_query($dbc, $query)) {
 		echo '<p style="color:red;">Could not retrieve the data because: <br/>' . mysqli_error($dbc) . '</p><p>The query being run was: ' . $query . '</p>';
 	}
   $activities = getActivitiesArray($activities, "payment", $r);
 
   // select from feedback table
-  $query = 'SELECT f.*, p.project_name, c.cust_name 
-            FROM feedback f, project p, customer c 
+  $query = 'SELECT f.*, p.project_name, u.name as cust_name 
+            FROM feedback f, project p, user u 
             WHERE f.project_id = p.project_id 
-            AND p.cust_id = c.cust_id';
+            AND p.cust_id = u.user_id';
 	if (!$r = mysqli_query($dbc, $query)) {
 		echo '<p style="color:red;">Could not retrieve the data because: <br/>' . mysqli_error($dbc) . '</p><p>The query being run was: ' . $query . '</p>';
 	}
@@ -155,9 +160,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta content="width=device-width, initial-scale=1, maximum-scale=1, shrink-to-fit=no" name="viewport">
-  <title>Activities &mdash; Stisla</title>
+  <?php include("head.php"); ?>
 
   <!-- General CSS Files -->
   <link rel="stylesheet" href="assets/modules/bootstrap/css/bootstrap.min.css">
@@ -206,9 +209,11 @@
                           $icon = '<i class="fas fa-comments"></i>';
 
                           if ($details['action'] == "create") {
+                            $bg = "bg-success";
                             $activity = sprintf('<span class="text-primary">%s</span> has made appointment for consultation on <span class="text-primary">%s</span>.', $details['cust_name'], $details['consultation_datetime']);
                           }
                           else if ($details['action'] == "update") {
+                            $bg = "bg-primary";
                             $activity = sprintf('<span class="text-primary">%s</span> has updated the details for consultation <span class="text-primary">#%d</span>.', $details['admin_name'], $details['consultation_id']);
                           }
                           break;
@@ -218,16 +223,19 @@
                           $icon = '<i class="fas fa-clipboard-list"></i>';
 
                           if ($details['action'] == "create") {
+                            $bg = "bg-success";
                             $activity = sprintf('A new project <span class="text-primary">%s</span> has been confirmed by <span class="text-primary">%s</span>.', $details['project_name'], $details['admin_name']);
                           }
                           else if ($details['action'] == "update") {
-                            $activity = sprintf('<span class="text-primary">%s</span> has updated the details for project <span class="text-primary">%s</span>.', $details['admin_name'], $details['project_name']);
+                            $bg = "bg-primary";
+                            $activity = sprintf('The details of project <span class="text-primary">%s</span> has been updated.', $details['project_name']);
                           }
                           break;
 
                         case 'payment':
                           $url = "project.php?project_id=" . $details['project_id'];
                           $icon = '<i class="fas fa-dollar-sign"></i>';
+                          $bg = "bg-warning";
 
                           $activity = sprintf('<span class="text-primary">%s</span> has made <span class="text-primary">%s</span> for project <span class="text-primary">%s</span>.', $details['cust_name'], $details['payment_status'], $details['project_name']);
                           break;
@@ -235,6 +243,7 @@
                         case 'feedback':
                           $url = "feedback.php?feedback_id=" . $details['feedback_id'];
                           $icon = '<i class="fas fa-comment-dots"></i>';
+                          $bg = "bg-primary";
                           
                           $activity = sprintf('<span class="text-primary">%s</span> has gave a feedback for project <span class="text-primary">%s</span>.', $details['cust_name'], $details['project_name']);
                           break;
@@ -245,14 +254,14 @@
                       }
                   ?>
                   <div class="activity">
-                    <div class="activity-icon bg-primary text-white shadow-primary">
+                    <div class="activity-icon <?php echo $bg; ?> text-white shadow-primary">
                       <?php echo $icon; ?> 
                     </div>
                     <div class="activity-detail">
                       <div class="mb-2">
                         <span class="text-job text-primary"><?php echo $time_ago; ?></span>
                         <span class="bullet"></span>
-                        <a class="text-job" href="<?php echo $url; ?>">View</a>
+                        <a class="text-job" href="<?php echo $url; ?>" target="_blank">View</a>
                       </div>
                       <p><?php echo $activity; ?></p>
                     </div>
