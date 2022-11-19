@@ -1,13 +1,44 @@
 <?php
   $page = "consultations";
   session_start();
+
+  $dbc = mysqli_connect('localhost', 'root', '');
+	mysqli_select_db($dbc, 'in_haus');
+
+  if ($_SESSION['admin_position'] == "Project Manager") {
+    $query = "SELECT c.*, u.name as cust_name 
+              FROM consultation c, user u 
+              WHERE c.cust_id = u.user_id ";
+  }
+  else {
+    $query = "SELECT c.*, u.name as cust_name 
+              FROM consultation c, user u 
+              WHERE c.cust_id = u.user_id 
+              AND c.admin_id = " . $_SESSION['admin_id'];
+  }
+
+	if (!$consultations = mysqli_query($dbc, $query)) {
+		echo '<p style="color:red;">Could not retrieve the data because: <br/>' . mysqli_error($dbc) . '</p><p>The query being run was: ' . $query . '</p>';
+	}
+
+  $query = 'SELECT user_id, name FROM user WHERE access_level = "Project Leader"';
+
+	if ($staffs_result = mysqli_query($dbc, $query)) {
+    $staffs = array();
+    while ($staff = mysqli_fetch_array($staffs_result)) {
+      $staffs[$staff['user_id']] = $staff['name'];
+    }
+	}
+  else {
+		echo '<p style="color:red;">Could not retrieve the data because: <br/>' . mysqli_error($dbc) . '</p><p>The query being run was: ' . $query . '</p>';
+  }
+
+	mysqli_close($dbc);
 ?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta content="width=device-width, initial-scale=1, maximum-scale=1, shrink-to-fit=no" name="viewport">
-  <title>Consultations &mdash; In Haus</title>
+  <?php include("head.php"); ?>
 
   <!-- General CSS Files -->
   <link rel="stylesheet" href="assets/modules/bootstrap/css/bootstrap.min.css">
@@ -49,6 +80,9 @@
             <div class="row">
               <div class="col-12 col-md-12 col-lg-12">
                 <div class="card">
+                <!-- <div class="card-header p-1">
+                    <a href="consultation.php" class="btn btn-icon icon-left btn-success"><i class="fas fa-plus"></i> Add</a>
+                  </div> -->
                   <div class="card-body p-0">
                     <div class="table-responsive">
                         <table class="table table-hover" id="consultations_table">
@@ -59,89 +93,65 @@
                                 <th>Datetime</th>
                                 <th>Preferred Style</th>
                                 <th>Design Range</th>
-                                <th style="width:33%">Remark</th>
-                                <th style="width:15%">Status</th>
+                                <th>Remark</th>
+                                <th style="width:14%">Status</th>
                                 <th>Customer</th>
-                                <th style="width:13%">Product Leader</th>
+                                <th style="width:14%">Product Leader</th>
                             </tr>
                           </thead>
                           <tbody>  
+                            <?php while ($row = mysqli_fetch_array($consultations)): ?>
                             <tr>                              
-                                <td><a href="consultation.php">29</a></td>
-                                <td>Phone Call</td>
-                                <td>24 Sep 2022, 10.00 am</td>
-                                <td>Urban</th>
-                                <td>Kitchen</td>
-                                <td>Lorem ipsum dolor, sit amet consectetur adipisicing elit. Unde illo, neque nobis aliquam sit soluta, tempore et, ipsum nulla debitis quod ex. Ab culpa et, a deserunt accusantium fugiat cupiditate.</td>
-                                <td>
-                                    <select class="form-control">
-                                        <option value="1" selected>Pending</option>
-                                        <option value="2">Done</option>
-                                        <option value="3">Project Confirmed</option>
+                                <td><a href="consultation.php?consultation_id=<?php echo $row['consultation_id']; ?>"><?php echo $row['consultation_id']; ?></a></td>
+                                <td><?php echo $row['consultation_type']; ?></td>
+                                <td><?php echo date("d M Y", strtotime($row['consultation_date'])); ?>, <?php echo date("g:i a", strtotime($row['consultation_time'])); ?></td>
+                                <td><?php echo str_replace(",", ", ", $row['preferred_style']); ?></th>
+                                <td><?php echo $row['design_range']; ?></td>
+                                <td><?php echo $row['consultation_remark']; ?></td>
+                                <td id="consultation_status_<?php echo $row['consultation_id']; ?>">
+                                <?php if ($row['consultation_status'] == "Project Confirmed"): ?>
+                                <?php echo $row['consultation_status']; ?>
+                                <?php else: ?>
+                                    <select class="form-control" onchange="updateStatus(<?php echo $row['consultation_id']; ?>,this.value)">
+                                        <option value="Pending" <?php echo ($row['consultation_status'] == "Pending") ? "selected" : ""; ?>>Pending</option>
+                                        <option value="Done" <?php echo ($row['consultation_status'] == "Done") ? "selected" : ""; ?>>Done</option>
+                                        <option value="Project Confirmed" <?php echo ($row['consultation_status'] == "Project Confirmed") ? "selected" : ""; ?>>Project Confirmed</option>
+                                        <option value="Cancelled" <?php echo ($row['consultation_status'] == "Cancelled") ? "selected" : ""; ?>>Cancelled</option>
                                     </select>
+                                <?php endif; ?>
                                 </td>
-                                <td>Ah Beng</td>
-                                <td>
-                                  <select class="form-control">
-                                    <option value="" selected disabled>Select Staff</option>
-                                    <option value="1">Christina Tong</option>
-                                    <option value="2">John Doe</option>
-                                    <option value="">James Foo</option>
-                                    <option value="3">Mickey Mouse</option>
-                                  </select>
+                                <td><?php echo $row['cust_name']; ?></td>
+                                <td id="project_leader_<?php echo $row['consultation_id']; ?>">
+                                    <?php 
+                                      if (empty($row['admin_id'])) {
+                                        echo '<select class="form-control" onchange="updateStaff('.$row['consultation_id'].',this.value)">';
+                                        echo '<option value="" selected disabled>Select Staff</option>';
+                                        foreach ($staffs as $staff_id => $staff_name) {
+                                          echo '<option value="'.$staff_id.'">'.$staff_name.'</option>';
+                                        }
+                                        echo '</select>';
+                                      }
+                                      else {
+                                        echo $staffs[$row['admin_id']];
+                                        // $dbc = mysqli_connect('localhost', 'root', '');
+                                        // mysqli_select_db($dbc, 'in_haus');
+                                      
+                                        // $query = "SELECT admin_name FROM admin WHERE admin_id = " . $row['admin_id'] . "";
+                                      
+                                        // if ($admin_name = mysqli_query($dbc, $query)) {
+                                        //   $row = mysqli_fetch_assoc($admin_name);
+			                                  //   $admin_name = $row['admin_name'];
+                                        //   echo $admin_name;
+                                        // }
+                                        // else {
+                                        //   echo '<p style="color:red;">Could not retrieve the data because: <br/>' . mysqli_error($dbc) . '</p><p>The query being run was: ' . $query . '</p>';
+                                        // }
+                                        // mysqli_close($dbc);
+                                      }
+                                    ?>
                                 </td>
                             </tr> 
-                            <tr>                              
-                                <td><a href="consultation.php">28</a></td>
-                                <td>Virtual Meeting</td>
-                                <td>23 Sep 2022, 10.00 am</td>
-                                <td>Urban</th>
-                                <td>Condo</td>
-                                <td>Lorem ipsum dolor, sit amet consectetur adipisicing elit. Unde illo, neque nobis aliquam sit soluta, tempore et, ipsum nulla debitis quod ex. Ab culpa et, a deserunt accusantium fugiat cupiditate.</td>
-                                <td>
-                                    <select class="form-control">
-                                        <option value="1" >Pending</option>
-                                        <option value="2">Done</option>
-                                        <option value="3" selected>Project Confirmed</option>
-                                    </select>
-                                </td>
-                                <td>Minnie Mouse</td>
-                                <td>James Foo</td>
-                            </tr> 
-                            <tr>                              
-                                <td><a href="consultation.php">27</a></td>
-                                <td>In Store</td>
-                                <td>22 Sep 2022, 10.00 am</td>
-                                <td>Urban</th>
-                                <td>Living Room</td>
-                                <td>Lorem ipsum dolor, sit amet consectetur adipisicing elit. Unde illo, neque nobis aliquam sit soluta, tempore et, ipsum nulla debitis quod ex. Ab culpa et, a deserunt accusantium fugiat cupiditate.</td>
-                                <td>
-                                    <select class="form-control">
-                                        <option value="1" >Pending</option>
-                                        <option value="2" selected>Done</option>
-                                        <option value="3">Project Confirmed</option>
-                                    </select>
-                                </td>
-                                <td>Mei Ling</td>
-                                <td>John Doe</td>
-                            </tr> 
-                            <tr>                              
-                                <td><a href="consultation.php">26</a></td>
-                                <td>In Home</td>
-                                <td>21 Sep 2022, 10.00 am</td>
-                                <td>Urban</th>
-                                <td>Office</td>
-                                <td>Lorem ipsum dolor, sit amet consectetur adipisicing elit. Unde illo, neque nobis aliquam sit soluta, tempore et, ipsum nulla debitis quod ex. Ab culpa et, a deserunt accusantium fugiat cupiditate.</td>
-                                <td>
-                                    <select class="form-control">
-                                        <option value="1" >Pending</option>
-                                        <option value="2">Done</option>
-                                        <option value="3" selected>Project Confirmed</option>
-                                    </select>
-                                </td>
-                                <td>Jessica Leong</td>
-                                <td>Mickey Mouse</td>
-                            </tr> 
+                            <?php endwhile; ?>
                           </tbody>
                         </table>
                       </div>
@@ -154,6 +164,74 @@
       </div>
     </div>
   </div>
+
+  <script>
+    function updateStaff(consultation_id, admin_id) {
+      $.ajax({
+        type: 'post',
+        url: 'consultation.php',
+        data: {
+          consultation_id: consultation_id, 
+          admin_id: admin_id
+        },
+        success: function(result) {
+          console.log(result);
+          if (result == 1) {
+            swal(
+              'Successful', 
+              'Project leader of consultation #' + consultation_id + ' has been successfully updated.', 
+              'success'
+            );
+            var staff = <?php echo json_encode($staffs); ?>;
+            document.getElementById("project_leader_" + consultation_id).innerHTML = staff[admin_id];
+          }
+          else {
+            swal(
+              'Oops!', 
+              'Something went wrong. Fail to update project leader of consultation.', 
+              'error'
+            );
+          }
+        }
+      });
+    }
+
+    function updateStatus(consultation_id, consultation_status) {
+      $.ajax({
+        type: 'post',
+        url: 'consultation.php?consultation_id=' + consultation_id,
+        data: {
+          consultation_id: consultation_id, 
+          consultation_status: consultation_status
+        },
+        success: function(result) {
+          console.log(result);
+          result = JSON.parse(result);
+          
+          if (result.success == 1) {
+            swal(
+              'Successful', 
+              'Status of consultation #' + consultation_id + ' has been successfully updated.', 
+              'success'
+            ).then(function() {
+              if (consultation_status == "Project Confirmed")
+                window.location = "project.php?project_id=" + result.insert_id;
+            });
+            if (consultation_status == "Project Confirmed") {
+              document.getElementById("consultation_status_" + consultation_id).innerHTML = consultation_status;
+            }
+          }
+          else {
+            swal(
+              'Oops!', 
+              'Something went wrong. Fail to update consultation status.', 
+              'error'
+            );
+          }
+        }
+      });
+    }
+  </script>
 
   <!-- General JS Scripts -->
   <script src="assets/modules/jquery.min.js"></script>
@@ -169,6 +247,7 @@
   <script src="assets/modules/datatables/DataTables-1.10.16/js/dataTables.bootstrap4.min.js"></script>
   <script src="assets/modules/datatables/Select-1.2.4/js/dataTables.select.min.js"></script>
   <script src="assets/modules/jquery-ui/jquery-ui.min.js"></script>
+  <script src="assets/modules/sweetalert/sweetalert.min.js"></script>
 
   <!-- Page Specific JS File -->
   <script src="assets/js/page/components-table.js"></script>
