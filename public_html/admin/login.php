@@ -1,5 +1,7 @@
 <?php
 
+  $page = "admin_login";
+
   $err = "";
 
   session_start();
@@ -15,17 +17,37 @@
       $admin_email = $_POST['email'];
       $admin_password = md5($_POST['password']);
   
-      $query = "SELECT admin_id FROM admin WHERE admin_email = '$admin_email' AND admin_password = '$admin_password'";
+      $query = "SELECT * FROM user 
+                WHERE email = '$admin_email' 
+                AND password = '$admin_password' 
+                AND access_level != 'Normal User'";
   
       $r = mysqli_query($dbc, $query);
-      $row = mysqli_fetch_array($r);
+      $row = mysqli_fetch_assoc($r);
   
       if (isset($row)) {
-        $_SESSION['admin_id'] = $row['admin_id'];
-        header("Location: dashboard.php");
+        $_SESSION['admin_id'] = $row['user_id'];
+        $_SESSION['admin_name'] = $row['name'];
+        $_SESSION['admin_email'] = $row['email'];
+        $_SESSION['admin_position'] = $row['access_level'];
+
+        if ($_SESSION['admin_position'] == "Customer Service")
+          header("Location: users.php");
+        else
+          header("Location: dashboard.php");
       }
       else {
-        $err = "The e-mail or password that you've entered is incorrect. Please try again.";
+        $query = "SELECT * FROM user 
+                  WHERE email = '$admin_email'  
+                  AND access_level != 'Normal User'";
+
+        $r = mysqli_query($dbc, $query);
+        $row = mysqli_fetch_assoc($r);
+
+        if (isset($row))
+          $err = "The e-mail or password that you've entered is incorrect. Please try again.";
+        else
+          $err = "The e-mail that you've entered does not match any account.";
       }
   
       mysqli_close($dbc);
@@ -37,9 +59,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta content="width=device-width, initial-scale=1, maximum-scale=1, shrink-to-fit=no" name="viewport">
-  <title>Login &mdash; Stisla</title>
+  <?php include("head.php"); ?>
 
   <!-- General CSS Files -->
   <link rel="stylesheet" href="assets/modules/bootstrap/css/bootstrap.min.css">
