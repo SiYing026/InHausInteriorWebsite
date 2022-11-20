@@ -94,11 +94,11 @@
                       </li>
                       <li class="rd-nav-item"><a class="rd-nav-link" href="appointmentForm.php">Consultation</a>
                       </li>
-                      <li class="rd-nav-item active"><a class="rd-nav-link" href="contacts.php">Contacts</a>
+                      <li class="rd-nav-item"><a class="rd-nav-link" href="contacts.php">Contacts</a>
                       </li>
                       <li class="rd-nav-item"><a class="rd-nav-link" href="users.php">Chat</a>
                     </li>
-                    <li class="rd-nav-item"><a class="rd-nav-link" href="profile.php">Profile</a>
+                    <li class="rd-nav-item active"><a class="rd-nav-link" href="profile.php">Profile</a>
                     </li>
                   </ul>
                 </div>
@@ -139,12 +139,6 @@
                         echo '</div>';
                         echo '</div>';
                         
-                        echo '<div class="row row-50">';
-                        echo '<div class="col-lg-8">';
-                        print "<h3>Access Level: {$row['access_level']}</h3>";
-                        echo '</div>';
-                        echo '</div>';
-
                         echo '<div class="row row-50">';
                         echo '<div class="col-md-12">';
                         print" <button class='button-74' role='button'><a href='php/logout.php?logout_id= {$row['user_id']}' class='logout'>Logout</a></button>";
