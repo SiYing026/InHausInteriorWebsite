@@ -155,9 +155,9 @@
                   <p>Consultation type</p>
                   <label class="form-label" for="consulType">Consultation type</label>
                   <select name="consulType" id="consulType" >
-                    <option value="online">Online</option>
-                    <option value="otherPlace">Other Place</option>
-                    <option value="office">Office</option>
+                    <option value="Online">Online</option>
+                    <option value="OtherPlace">Other Place</option>
+                    <option value="Office">Office</option>
                   </select>
                 </div>
                 </div>
