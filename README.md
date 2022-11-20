@@ -4,7 +4,9 @@
 2. paste the folder "public_html" in htdocs
 
 Testing Project Manager Account
+
 E-mail: superman@gmail.com
+
 Password: Superman123!
 
 Testing Project Leader Account
