@@ -22,7 +22,7 @@
 
     $mail->isHTML(true);
     $mail->Subject = 'In Haus - Feedback Form';
-    $mail->Body = "<p>Hi ".$cust_name."! .Thank you for choosing out company! Below is the feedback form link, Please click in for feedback. Thank you<p><a href='http://localhost/vsCode/template1/site/feedBackForm.php?project_id=".$project_id."&cust_id=".$cust_id."'>Click here</a>";
+    $mail->Body = "<p>Hi ".$cust_name."! .Thank you for choosing out company! Below is the feedback form link, Please click in for feedback. Thank you<p><a href='http://localhost/public_html/user/feedBackForm.php?project_id=".$project_id."&cust_id=".$cust_id."'>Click here</a>";
     $mail->send();
 
     // if ($mail->send()) {
