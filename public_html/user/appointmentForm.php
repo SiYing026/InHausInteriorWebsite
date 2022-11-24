@@ -109,43 +109,43 @@
                 <br>
                 <div class="col-lg-12">
                   <div class="form-check">
-                  <input type="checkbox" class="form-check-input" id="mordernMinimalist" name="preferred_style[]" value="mordernMinimalist" />
+                  <input type="checkbox" class="form-check-input" id="mordernMinimalist" name="preferred_style[]" value="Modern Minimalist" />
                   <label class="form-check-label" for="mordernMinimalist">Mordern Minimalist</label>
                 </div>
                 <div class="form-check">
-                  <input type="checkbox" class="form-check-input" id="Industrial" name="preferred_style[]" value="Industrial" />
+                  <input type="checkbox" class="form-check-input" id="Industrial" name="preferred_style[]" value="Industrial Style" />
                   <label class="form-check-label" for="Industrial">Industrial Style</label>
                 </div>
                 <div class="form-check">
-                  <input type="checkbox" class="form-check-input" id="Traditional/Classic" name="preferred_style[]" value="Traditional/Classic"/>
+                  <input type="checkbox" class="form-check-input" id="Traditional/Classic" name="preferred_style[]" value="Traditional/Classic Style"/>
                   <label class="form-check-label" for="Traditional/Classic">Traditional/Classic Style</label>
                 </div>
                 <div class="form-check">
-                  <input type="checkbox" class="form-check-input" id="Art_Deco" name="preferred_style[]" value="Art_Deco"/>
+                  <input type="checkbox" class="form-check-input" id="Art_Deco" name="preferred_style[]" value="Art Deco Style"/>
                   <label class="form-check-label" for="Art_Deco">Art Deco Style</label>
                 </div>
                 <div class="form-check">
-                  <input type="checkbox" class="form-check-input" id="English_Country" name="preferred_style[]" value="English_Country"/>
+                  <input type="checkbox" class="form-check-input" id="English_Country" name="preferred_style[]" value="English Country Style"/>
                   <label class="form-check-label" for="English_Country">English Country Style</label>
                 </div>
                 <div class="form-check">
-                  <input type="checkbox" class="form-check-input" id="Coastal" name="preferred_style[]" value="Coastal"/>
+                  <input type="checkbox" class="form-check-input" id="Coastal" name="preferred_style[]" value="Coastal Style"/>
                   <label class="form-check-label" for="Coastal">Coastal Style</label>
                 </div>
                 <div class="form-check">
-                  <input type="checkbox" class="form-check-input" id="Eclectic" name="preferred_style[]" value="Eclectic"/>
+                  <input type="checkbox" class="form-check-input" id="Eclectic" name="preferred_style[]" value="Eclectic Style"/>
                   <label class="form-check-label" for="Eclectic">Eclectic Style</label>
                 </div>
                 <div class="form-check">
-                  <input type="checkbox" class="form-check-input" id="Asian/Zen" name="preferred_style[]" value="Asian/Zen"/>
+                  <input type="checkbox" class="form-check-input" id="Asian/Zen" name="preferred_style[]" value="Asian/Zen Style"/>
                   <label class="form-check-label" for="Asian/Zen">Asian/Zen Style</label>
                 </div>
                 <div class="form-check">
-                  <input type="checkbox" class="form-check-input" id="Rustic" name="preferred_style[]" value="Rustic"/>
+                  <input type="checkbox" class="form-check-input" id="Rustic" name="preferred_style[]" value="Rustic Style"/>
                   <label class="form-check-label" for="Rustic">Rustic Style</label>
                 </div>
                 <div class="form-check">
-                  <input type="checkbox" class="form-check-input" id="Hi-Tech" name="preferred_style[]" value="Hi-Tech"/>
+                  <input type="checkbox" class="form-check-input" id="Hi-Tech" name="preferred_style[]" value="Hi-Tech Style"/>
                   <label class="form-check-label" for="Hi-Tech">Hi-Tech Style</label>
                 </div>
                 </div>
@@ -155,9 +155,10 @@
                   <p>Consultation type</p>
                   <label class="form-label" for="consulType">Consultation type</label>
                   <select name="consulType" id="consulType" >
-                    <option value="Online">Online</option>
-                    <option value="OtherPlace">Other Place</option>
-                    <option value="Office">Office</option>
+                    <option value="In Home">In Home</option>
+                    <option value="Phone Call">Phone Call</option>
+                    <option value="In Store">In Store</option>
+                    <option value="Virtual Meeting">Virtual Meeting</option>
                   </select>
                 </div>
                 </div>
