@@ -65,6 +65,8 @@
                     </li>
                     <li class="rd-nav-item"><a class="rd-nav-link" href="profile.php">Profile</a>
                     </li>
+                    <li class="rd-nav-item"><a class="rd-nav-link" href="feedBackForm.php">Feedback</a>
+                    </li>
                     </ul>
                   </div>
                 </div>
